@@ -38,8 +38,8 @@ class DisplayImages extends StatelessWidget {
 
   circleImage() {
     return Container(
-        width: 300,
-        height: 300,
+        width: 50,
+        height: 50,
         decoration: BoxDecoration(
           image: const DecorationImage(
             image: AssetImage(
