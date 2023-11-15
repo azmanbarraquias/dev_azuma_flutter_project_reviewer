@@ -1,6 +1,7 @@
-import 'package:DevAzuma/getx_practice/contollers/tap_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'contollers/tap_controller.dart';
 
 class FirstPage extends StatelessWidget {
   const FirstPage({super.key});
@@ -14,7 +15,8 @@ class FirstPage extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             Get.back();
-          }, icon: Icon(Icons.arrow_back),
+          },
+          icon: Icon(Icons.arrow_back),
         ),
       ),
       body: Container(
@@ -34,12 +36,12 @@ class FirstPage extends StatelessWidget {
                   ),
                   child: Center(
                       child: Text(
-                        'Tap ${controller.x}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.red,
-                        ),
-                      )),
+                    'Tap ${controller.x}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.red,
+                    ),
+                  )),
                 );
               },
             ),
@@ -53,12 +55,12 @@ class FirstPage extends StatelessWidget {
               ),
               child: Center(
                   child: Text(
-                    'Tap ${controller.x}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.red,
-                    ),
-                  )),
+                'Tap ${controller.x}',
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.red,
+                ),
+              )),
             ),
             GetBuilder<TapController>(
               builder: (_) {
@@ -76,12 +78,12 @@ class FirstPage extends StatelessWidget {
                     ),
                     child: Center(
                         child: Text(
-                          'Tap ${controller.x}',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.red,
-                          ),
-                        )),
+                      'Tap ${controller.x}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.red,
+                      ),
+                    )),
                   ),
                 );
               },

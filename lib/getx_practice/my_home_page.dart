@@ -1,8 +1,8 @@
-import 'package:DevAzuma/getx_practice/first_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'contollers/tap_controller.dart';
+import 'first_page.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -88,7 +88,7 @@ class MyHomePage extends StatelessWidget {
                   )),
                 ),
               ),
-              Obx((){
+              Obx(() {
                 return GestureDetector(
                   onTap: () {
                     controller.increaseXObs();
@@ -103,16 +103,16 @@ class MyHomePage extends StatelessWidget {
                     ),
                     child: Center(
                         child: Text(
-                          'Tap${controller.count.value}',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.red,
-                          ),
-                        )),
+                      'Tap${controller.count.value}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.red,
+                      ),
+                    )),
                   ),
                 );
               }),
-              Obx((){
+              Obx(() {
                 return GestureDetector(
                   onTap: () {
                     controller.goToSecondPage();
@@ -127,18 +127,15 @@ class MyHomePage extends StatelessWidget {
                     ),
                     child: Center(
                         child: Text(
-                          'Tap${controller.count}',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.red,
-                          ),
-                        )),
+                      'Tap${controller.count}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.red,
+                      ),
+                    )),
                   ),
                 );
               })
-
-
-
             ],
           ),
         ),

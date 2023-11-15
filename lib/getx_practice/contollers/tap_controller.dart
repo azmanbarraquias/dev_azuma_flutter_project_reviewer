@@ -1,5 +1,6 @@
-import 'package:DevAzuma/getx_practice/second_page.dart';
 import 'package:get/get.dart';
+
+import '../second_page.dart';
 
 class TapController extends GetxController {
   int _x = 0;
@@ -32,8 +33,4 @@ class TapController extends GetxController {
   void goToSecondPage() {
     Get.to(() => const SecondPage());
   }
-
-
-
-
 }
