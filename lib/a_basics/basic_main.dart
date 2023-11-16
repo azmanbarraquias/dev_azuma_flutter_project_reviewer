@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'models/transactions.dart';
+import 'widgets/new_transactions.dart';
 import 'widgets/user_transactions.dart';
 
 /* DateTime intl
@@ -17,7 +18,7 @@ void main() {
           centerTitle: true,
           title: const Text("Flutter App"),
         ),
-        body: const SafeArea(
+        body: SafeArea(
           child: MyHomePage(),
         ),
       ),
@@ -26,7 +27,7 @@ void main() {
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+  MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
           ),
-          const UserTransactions()
+          UserTransactions()
         ],
       ),
     );
