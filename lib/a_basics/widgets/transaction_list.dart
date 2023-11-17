@@ -13,41 +13,64 @@ class TransactionList extends StatelessWidget {
     return Container(
       color: Colors.grey,
       height: 300,
-      child: ListView.builder(
-        itemCount: transactionsList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: Row(
+      child: transactionsList.isEmpty
+          ? Column(
               children: [
-                Container(
-                  width: 80,
-                  margin: const EdgeInsets.all(15),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 2)),
-                  child: Text(
-                    '\$${transactionsList[index].amount}',
-                  ),
+                const Text('No Transaction added yet!',
+                    style: TextStyle(fontSize: 20, color: Colors.red)),
+                const SizedBox(
+                  height: 10,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      transactionsList[index].title,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      DateFormat('dd/MM/yyyy hh:mm aa')
-                          .format(transactionsList[index].dateTime),
-                      style: const TextStyle(color: Colors.grey),
-                    )
-                  ],
+                SizedBox(
+                  height: 200,
+                  child: Image.asset(
+                    'assets/pls_wait.png',
+                    fit: BoxFit.cover,
+                  ),
                 )
               ],
+            )
+          : ListView.builder(
+              itemCount: transactionsList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 100,
+                        margin: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Theme.of(context).primaryColor,
+                                width: 2)),
+                        child: Text(
+                          '\$${transactionsList[index].amount}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            transactionsList[index].title,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            DateFormat('dd/MM/yyyy hh:mm aa')
+                                .format(transactionsList[index].dateTime),
+                            style: const TextStyle(color: Colors.grey),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }
