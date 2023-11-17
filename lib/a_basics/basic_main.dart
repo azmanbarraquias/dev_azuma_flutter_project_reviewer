@@ -42,6 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // Transaction(title: 'New Nike 12', amount: 121.52, dateTime: DateTime.now()),
   ];
 
+
+ final List<Transaction> get _recentTransactions {
+    return _userTransaction.where((element) {}  
+  }
+
+
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
@@ -61,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     print('Good');
   }
+
 
   @override
   Widget build(BuildContext context) {
