@@ -43,9 +43,9 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
 
- final List<Transaction> get _recentTransactions {
-    return _userTransaction.where((element) {}  
-  }
+ // final List<Transaction> get _recentTransactions {
+ //    return _userTransaction.where((element) {}
+ //  }
 
 
   void _startAddNewTransaction(BuildContext ctx) {
