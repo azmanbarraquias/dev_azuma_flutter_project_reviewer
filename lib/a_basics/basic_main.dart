@@ -1,6 +1,7 @@
 import 'package:dev_azuma/a_basics/widgets/new_transactions.dart';
 import 'package:flutter/material.dart';
 import 'models/transactions.dart';
+import 'widgets/chart.dart';
 import 'widgets/transaction_list.dart';
 
 /* DateTime intl
@@ -37,16 +38,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransaction = [
-    // Transaction(title: 'New Adidas', amount: 122.52, dateTime: DateTime.now()),
-    // Transaction(title: 'New Shoes1', amount: 122.52, dateTime: DateTime.now()),
-    // Transaction(title: 'New Nike 12', amount: 121.52, dateTime: DateTime.now()),
+    Transaction(title: 'New Adidas', amount: 122.52, dateTime: DateTime.now()),
+    Transaction(title: 'New Shoes1', amount: 122.52, dateTime: DateTime.now()),
+    Transaction(title: 'New Nike 12', amount: 121.52, dateTime: DateTime.now()),
   ];
 
-
- // final List<Transaction> get _recentTransactions {
- //    return _userTransaction.where((element) {}
- //  }
-
+  List<Transaction> get _recentTransactions {
+    return _userTransaction.where((tx) {
+      return tx.dateTime.isAfter(
+        DateTime.now().subtract(const Duration(days: 7)),
+      );
+    }).toList();
+  }
 
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
@@ -67,7 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     print('Good');
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -99,14 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Card(
               margin: const EdgeInsets.all(10),
               elevation: 5,
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(10),
-                child: const Text(
-                  "Chart",
-                  style: TextStyle(fontSize: 30),
-                ),
-              ),
+              child: Chart(recentTransactions: _recentTransactions),
             ),
             Card(
               margin: const EdgeInsets.all(10),
