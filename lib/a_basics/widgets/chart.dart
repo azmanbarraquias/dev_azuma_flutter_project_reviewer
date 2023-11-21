@@ -1,6 +1,6 @@
 import 'package:dev_azuma/a_basics/models/transactions.dart';
+import 'package:dev_azuma/a_basics/widgets/chart_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
 
 class Chart extends StatelessWidget {
@@ -15,8 +15,8 @@ class Chart extends StatelessWidget {
       );
       var totalSum = 0.0;
       for (var i = 0; i < recentTransactions.length; i++) {
-        if (recentTransactions[i].dateTime.day == weekDay.day ||
-            recentTransactions[i].dateTime.month == weekDay.month ||
+        if (recentTransactions[i].dateTime.day == weekDay.day &&
+            recentTransactions[i].dateTime.month == weekDay.month &&
             recentTransactions[i].dateTime.year == weekDay.year) {
           totalSum += recentTransactions[i].amount;
         }
@@ -26,22 +26,38 @@ class Chart extends StatelessWidget {
       print(totalSum);
 
       return {
-        'day': DateFormat.E().format(weekDay).substring(0, 1),
+        'day': DateFormat.E().format(weekDay).substring(0, 3),
         'amount': totalSum
       };
     });
   }
 
+  double get totalSpending {
+    return groupedTransactionValues.fold(
+        0.0, (sum, item) => sum + (item['amount'] as double));
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(groupedTransactionValues);
     return Card(
       elevation: 6,
-      margin: EdgeInsets.all(10),
-      child: Row(
-        children: groupedTransactionValues
-            .map((e) => Text('${e['day']} : ${e['amount']}'))
-            .toList(),
+      margin: const EdgeInsets.all(20),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransactionValues.map((e) {
+            return Flexible(
+            fit: FlexFit.tight,
+              child: ChartBar(
+                  label: e['day'].toString(),
+                  spendingAmount: e['amount'] as double,
+                  spendingPctOfTotal: totalSpending == 0.0
+                      ? 0.0
+                      : (e['amount'] as double) / totalSpending),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
