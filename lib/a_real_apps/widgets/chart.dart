@@ -1,7 +1,9 @@
-import 'package:dev_azuma/a_basics/models/transactions.dart';
-import 'package:dev_azuma/a_basics/widgets/chart_bar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../models/transactions.dart';
+import 'chart_bar.dart';
 
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
