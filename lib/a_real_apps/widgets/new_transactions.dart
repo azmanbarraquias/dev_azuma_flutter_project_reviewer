@@ -38,13 +38,27 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
             controller: amountController,
           ),
-          TextButton(
+          Row(
+            children: [
+              Text("No Date Chosen!"),
+              const SizedBox(
+                width: 10,
+              ),
+              TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Choose Date",
+                    style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
+                  ))
+            ],
+          ),
+          ElevatedButton(
               onPressed: () => submitData(),
               child: const Text(
                 "Add Transaction",
                 textAlign: TextAlign.end,
                 style: TextStyle(
-                  color: Colors.purple,
+                  color: Colors.white,
                 ),
               ))
         ],
