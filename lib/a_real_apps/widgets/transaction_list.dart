@@ -41,7 +41,7 @@ class TransactionList extends StatelessWidget {
                     title: Text('${transactionsList[index].title}'),
                     subtitle: Text(DateFormat('dd/MM/yyyy hh:mm aa')
                         .format(transactionsList[index].dateTime)),
-                    trailing: const Icon(Icons.attach_money),
+                    trailing:  Icon(Icons.delete, color: Theme.of(context).errorColor,),
                     leading: CircleAvatar(
                       radius: 30,
                       child: Padding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addNewTransaction;
@@ -11,8 +12,8 @@ class NewTransaction extends StatefulWidget {
 
 class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
-
   final amountController = TextEditingController();
+  DateTime? _selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class _NewTransactionState extends State<NewTransaction> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           TextField(
-            onSubmitted: (_) => submitData(),
+            onSubmitted: (_) => _submitData(),
             decoration: const InputDecoration(
               labelText: "Title",
               contentPadding: EdgeInsets.all(10),
@@ -30,7 +31,7 @@ class _NewTransactionState extends State<NewTransaction> {
             controller: titleController,
           ),
           TextField(
-            onSubmitted: (_) => submitData(),
+            onSubmitted: (_) => _submitData(),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.all(10),
@@ -38,22 +39,33 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
             controller: amountController,
           ),
+          const SizedBox(
+            height: 5,
+          ),
           Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("No Date Chosen!"),
+              Text(_selectedDate == null
+                  ? "No Date Chosen!"
+                  : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}'),
               const SizedBox(
                 width: 10,
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: _showDatePicker,
                   child: Text(
                     "Choose Date",
-                    style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold),
                   ))
             ],
           ),
+          const SizedBox(
+            height: 10,
+          ),
           ElevatedButton(
-              onPressed: () => submitData(),
+              onPressed: () => _submitData(),
               child: const Text(
                 "Add Transaction",
                 textAlign: TextAlign.end,
@@ -66,12 +78,30 @@ class _NewTransactionState extends State<NewTransaction> {
     );
   }
 
-  void submitData() {
+  void _submitData() {
     if (titleController.text.isEmpty ||
-        double.parse(amountController.text) <= 0) {
+        double.parse(amountController.text) <= 0 || _selectedDate == null) {
       return;
     }
-    widget.addNewTransaction(titleController.text, amountController.text);
+    widget.addNewTransaction(titleController.text, amountController.text, _selectedDate);
     Navigator.of(context).pop();
+  }
+
+  _showDatePicker() {
+    print('Date Picker Show');
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2019),
+            lastDate: DateTime.now())
+        .then((value) {
+      print('WTF ');
+      if (value == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = value;
+      });
+    });
   }
 }
