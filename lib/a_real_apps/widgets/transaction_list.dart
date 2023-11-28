@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
 
 import '../models/transactions.dart';
 
 class TransactionList extends StatelessWidget {
-  const TransactionList({super.key, required this.transactionsList});
+  const TransactionList(
+      {super.key, required this.transactionsList, required this.deleteUser});
 
   final List<Transaction> transactionsList;
+  final Function deleteUser;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey,
-      height: 300,
+      height: 500,
       child: transactionsList.isEmpty
           ? Column(
               children: [
@@ -38,10 +41,17 @@ class TransactionList extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                   elevation: 5,
                   child: ListTile(
-                    title: Text('${transactionsList[index].title}'),
+                    title: Text(
+                        '${transactionsList[index].userID} ${transactionsList[index].title.capitalizeFirst}'),
                     subtitle: Text(DateFormat('dd/MM/yyyy hh:mm aa')
                         .format(transactionsList[index].dateTime)),
-                    trailing:  Icon(Icons.delete, color: Theme.of(context).errorColor,),
+                    trailing: IconButton(
+                        icon: Icon(
+                          Icons.delete,
+                          color: Theme.of(context).errorColor,
+                        ),
+                        onPressed: () =>
+                            {deleteUser(transactionsList[index].userID)}),
                     leading: CircleAvatar(
                       radius: 30,
                       child: Padding(

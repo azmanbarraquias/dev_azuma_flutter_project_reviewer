@@ -43,7 +43,7 @@ class _NewTransactionState extends State<NewTransaction> {
             height: 5,
           ),
           Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(_selectedDate == null
                   ? "No Date Chosen!"
@@ -80,10 +80,12 @@ class _NewTransactionState extends State<NewTransaction> {
 
   void _submitData() {
     if (titleController.text.isEmpty ||
-        double.parse(amountController.text) <= 0 || _selectedDate == null) {
+        double.parse(amountController.text) <= 0 ||
+        _selectedDate == null) {
       return;
     }
-    widget.addNewTransaction(titleController.text, amountController.text, _selectedDate);
+    widget.addNewTransaction(
+        titleController.text, amountController.text, _selectedDate);
     Navigator.of(context).pop();
   }
 
@@ -95,8 +97,9 @@ class _NewTransactionState extends State<NewTransaction> {
             firstDate: DateTime(2019),
             lastDate: DateTime.now())
         .then((value) {
-      print('WTF ');
+      print('You select ${DateFormat.yMd().format(value!)}');
       if (value == null) {
+        print('No Date Selected');
         return;
       }
       setState(() {

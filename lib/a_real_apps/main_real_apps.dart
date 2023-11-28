@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'models/transactions.dart';
 import 'widgets/chart.dart';
 import 'widgets/new_transactions.dart';
@@ -10,6 +11,7 @@ https://api.flutter.dev/flutter/intl/DateFormat-class.html
 void main() {
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "Personal Expenses",
       theme: ThemeData(
           textTheme: ThemeData.light().textTheme.copyWith(
@@ -24,7 +26,7 @@ void main() {
           primarySwatch: Colors.purple,
           hintColor: Colors.red,
           fontFamily: 'OpenSans'),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     ),
   );
 }
@@ -71,8 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
     print('Good');
   }
 
-  void _deleteTransaction() {
-
+  void _deleteTransaction(int id) {
+    setState(() {
+      _userTransaction.removeWhere((element) => element.userID == id);
+    });
   }
 
   @override
@@ -102,23 +106,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Card(
-              margin: const EdgeInsets.all(10),
-              elevation: 5,
-              child: Chart(recentTransactions: _recentTransactions),
+            Chart(recentTransactions: _recentTransactions),
+            TransactionList(
+              transactionsList: _userTransaction,
+              deleteUser: _deleteTransaction,
             ),
-            Card(
-              margin: const EdgeInsets.all(10),
-              color: Colors.yellow,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                width: double.infinity,
-                child: const Text(
-                  "List of Transaction",
-                ),
-              ),
-            ),
-            TransactionList(transactionsList: _userTransaction),
           ],
         ),
       ),
