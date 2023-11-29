@@ -13,39 +13,51 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FittedBox(child: Text('\$${spendingAmount.toStringAsFixed(0)}')),
-        const SizedBox(
-          height: 4,
-        ),
-        SizedBox(
-          height: 60,
-          width: 10,
-          child: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1.0),
-                  color: const Color.fromRGBO(220, 220, 220, 1),
-                  borderRadius: BorderRadius.circular(10),
-                ), 
-              ),
-              FractionallySizedBox(
-                heightFactor: spendingPctOfTotal,
-                child: Container(
+    return LayoutBuilder(builder: (ctx, boxConstraint) {
+      return Column(
+        children: [
+          Container(
+              height: boxConstraint.maxHeight * 0.15,
+              child: FittedBox(
+                  child: Text('\$${spendingAmount.toStringAsFixed(0)}'))),
+          SizedBox(
+            height: boxConstraint.maxHeight * 0.05,
+          ),
+          SizedBox(
+            height: boxConstraint.maxHeight * 0.6,
+            width: 10,
+            child: Stack(
+              children: [
+                Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+                    border: Border.all(color: Colors.grey, width: 1.0),
+                    color: const Color.fromRGBO(220, 220, 220, 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-              )
-            ],
+                FractionallySizedBox(
+                  heightFactor: spendingPctOfTotal,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(ctx).primaryColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-        Text(label, style:
-        TextStyle(fontSize: 10),)
-      ],
-    );
+          SizedBox(
+            height: boxConstraint.maxHeight * 0.15,
+            child: FittedBox(
+              child: Text(
+                label,
+                style: const TextStyle(fontSize: 10),
+              ),
+            ),
+          )
+        ],
+      );
+    });
   }
 }

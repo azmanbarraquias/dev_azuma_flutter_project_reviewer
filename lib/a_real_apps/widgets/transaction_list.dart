@@ -13,7 +13,8 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return LayoutBuilder(builder: (ctx, boxConstraint) {return const Placeholder();});
+     Container(
       color: Colors.grey,
       height: 500,
       child: transactionsList.isEmpty

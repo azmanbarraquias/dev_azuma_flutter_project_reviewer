@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'models/transactions.dart';
 import 'widgets/chart.dart';
@@ -9,6 +10,9 @@ import 'widgets/transaction_list.dart';
 https://api.flutter.dev/flutter/intl/DateFormat-class.html
 */
 void main() {
+// WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -44,6 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // Transaction(title: 'Groceries', amount: 9.69, dateTime: DateTime.now()),
     // Transaction(title: 'New Nike 12', amount: 121.52, dateTime: DateTime.now()),
   ];
+
+  bool _showChart = false;
 
   List<Transaction> get _recentTransactions {
     return _userTransaction.where((tx) {
@@ -81,6 +87,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final appBar = AppBar(
+      backgroundColor: Theme.of(context).secondaryHeaderColor,
+      actions: [
+        IconButton(
+            onPressed: () {
+              _startAddNewTransaction(context);
+            },
+            icon: const Icon(
+              Icons.add,
+            ))
+      ],
+      title: const Text("Personal Expenses"),
+    );
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -88,30 +110,45 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         child: const Icon(Icons.add),
       ),
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).secondaryHeaderColor,
-        actions: [
-          IconButton(
-              onPressed: () {
-                _startAddNewTransaction(context);
-              },
-              icon: const Icon(
-                Icons.add,
-              ))
-        ],
-        title: const Text("Personal Expenses"),
-      ),
+      appBar: appBar,
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Chart(recentTransactions: _recentTransactions),
-            TransactionList(
-              transactionsList: _userTransaction,
-              deleteUser: _deleteTransaction,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Show Chart"),
+                  Switch(
+                      value: _showChart,
+                      onChanged: (val) {
+                        setState(() {
+                          _showChart = val;
+                        });
+                      })
+                ],
+              ),
+
+              _showChart ? SizedBox(
+                  height: (screenHeight -
+                          appBar.preferredSize.height -
+                          statusBarHeight) *
+                      0.7,
+                  child: Chart(recentTransactions: _recentTransactions)):
+              SizedBox(
+                height: (screenHeight -
+                        appBar.preferredSize.height -
+                        statusBarHeight) *
+                    0.7,
+                child: TransactionList(
+                  transactionsList: _userTransaction,
+                  deleteUser: _deleteTransaction,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
