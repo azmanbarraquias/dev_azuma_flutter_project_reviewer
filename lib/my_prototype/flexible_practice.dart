@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
       home: Scaffold(
-      appBar: AppBar(title: const Text("Flutter Demo"),),
+    appBar: AppBar(
+      title: const Text("Flutter Demo"),
+    ),
     body: const MyFlexible(),
   )));
 }
@@ -16,14 +18,17 @@ class MyFlexible extends StatelessWidget {
     return Column(
       children: [
         Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Expanded(
               child: Container(
                 height: 100,
-                child: Text('Item 1 - pretty bigxxsdasdasdasdasddsdssds!', overflow: TextOverflow.ellipsis,),
                 color: Colors.red,
+                child: const Text(
+                  'Item 1 - pretty bigxxsdasdasdasdasddsdssds!',
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
             Container(
@@ -41,8 +46,8 @@ class MyFlexible extends StatelessWidget {
           ],
         ),
         Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
               height: 100,
@@ -50,8 +55,8 @@ class MyFlexible extends StatelessWidget {
               color: Colors.red,
             ),
             Flexible(
-            flex: 1,
-            fit: FlexFit.tight,
+              flex: 1,
+              fit: FlexFit.tight,
               child: Container(
                 height: 100,
                 child: Text('Item 2'),
@@ -68,7 +73,7 @@ class MyFlexible extends StatelessWidget {
               ),
             ),
             Flexible(
-            fit: FlexFit.tight,
+              fit: FlexFit.tight,
               child: Container(
                 height: 100,
                 child: Text('Item 4'),

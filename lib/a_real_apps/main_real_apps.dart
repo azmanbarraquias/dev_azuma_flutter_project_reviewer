@@ -89,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenOrientation = MediaQuery.of(context).orientation;
     final appBar = AppBar(
       backgroundColor: Theme.of(context).secondaryHeaderColor,
       actions: [
@@ -117,39 +118,65 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Show Chart"),
-                  Switch(
-                      value: _showChart,
-                      onChanged: (val) {
-                        setState(() {
-                          _showChart = val;
-                        });
-                      })
-                ],
-              ),
-
-              _showChart ? SizedBox(
-                  height: (screenHeight -
-                          appBar.preferredSize.height -
-                          statusBarHeight) *
-                      0.7,
-                  child: Chart(recentTransactions: _recentTransactions)):
-              SizedBox(
-                height: (screenHeight -
-                        appBar.preferredSize.height -
-                        statusBarHeight) *
-                    0.7,
-                child: TransactionList(
-                  transactionsList: _userTransaction,
-                  deleteUser: _deleteTransaction,
+              if (screenOrientation == Orientation.landscape)
+                Column(
+                  children: [
+                    SizedBox(
+                      height: (screenHeight -
+                              appBar.preferredSize.height -
+                              statusBarHeight) *
+                          0.1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (screenOrientation == Orientation.landscape)
+                            const Text("Show Chart"),
+                          Switch(
+                              value: _showChart,
+                              onChanged: (val) {
+                                setState(() {
+                                  _showChart = val;
+                                });
+                              })
+                        ],
+                      ),
+                    ),
+                    _showChart
+                        ? chartBar(screenHeight, appBar, statusBarHeight, 0.85)
+                        : transactionList(
+                            screenHeight, appBar, statusBarHeight, 0.85),
+                  ],
                 ),
-              ),
+              if (screenOrientation == Orientation.portrait)
+                Column(
+                  children: [
+                    chartBar(screenHeight, appBar, statusBarHeight, 0.3),
+                    transactionList(screenHeight, appBar, statusBarHeight, 0.7),
+                  ],
+                ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  SizedBox chartBar(
+      double screenHeight, AppBar appBar, double statusBarHeight, double size) {
+    return SizedBox(
+        height: (screenHeight - appBar.preferredSize.height - statusBarHeight) *
+            size,
+        child: Chart(recentTransactions: _recentTransactions));
+  }
+
+  SizedBox transactionList(
+      double screenHeight, AppBar appBar, double statusBarHeight, double size) {
+    return SizedBox(
+      height:
+          (screenHeight - appBar.preferredSize.height - statusBarHeight) * size,
+      child: TransactionList(
+        transactionsList: _userTransaction,
+        deleteUser: _deleteTransaction,
       ),
     );
   }

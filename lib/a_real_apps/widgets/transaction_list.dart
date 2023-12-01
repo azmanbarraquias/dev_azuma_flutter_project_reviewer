@@ -15,20 +15,22 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (ctx, boxConstraints) {
       return Container(
-        color: Colors.grey,
+        color: const Color.fromRGBO(0, 0, 0, 0.05),
         child: transactionsList.isEmpty
             ? Column(
                 children: [
-                  const Text('No Transaction added yet!',
-                      style: TextStyle(fontSize: 20, color: Colors.red)),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                  height: boxConstraints.maxHeight * 0.1,
+                    child: const Center(
+                      child: Text('No Transaction added yet!',
+                          style: TextStyle(fontSize: 20, color: Colors.black)),
+                    ),
                   ),
                   SizedBox(
-                    height: boxConstraints.maxHeight * 0.8,
+                    height: boxConstraints.maxHeight * 0.9,
                     child: Image.asset(
                       'assets/pls_wait.png',
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                     ),
                   )
                 ],

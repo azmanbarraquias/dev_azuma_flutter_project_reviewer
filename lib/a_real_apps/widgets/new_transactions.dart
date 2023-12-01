@@ -17,63 +17,69 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          TextField(
-            onSubmitted: (_) => _submitData(),
-            decoration: const InputDecoration(
-              labelText: "Title",
-              contentPadding: EdgeInsets.all(10),
-            ),
-            controller: titleController,
-          ),
-          TextField(
-            onSubmitted: (_) => _submitData(),
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.all(10),
-              labelText: "Amount",
-            ),
-            controller: amountController,
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(_selectedDate == null
-                  ? "No Date Chosen!"
-                  : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}'),
-              const SizedBox(
-                width: 10,
+    return SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            TextField(
+              onSubmitted: (_) => _submitData(),
+              decoration: const InputDecoration(
+                labelText: "Title",
+                contentPadding: EdgeInsets.all(10),
               ),
-              TextButton(
-                  onPressed: _showDatePicker,
-                  child: Text(
-                    "Choose Date",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.bold),
-                  ))
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ElevatedButton(
-              onPressed: () => _submitData(),
-              child: const Text(
-                "Add Transaction",
-                textAlign: TextAlign.end,
-                style: TextStyle(
-                  color: Colors.white,
+              controller: titleController,
+            ),
+            TextField(
+              onSubmitted: (_) => _submitData(),
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.all(10),
+                labelText: "Amount",
+              ),
+              controller: amountController,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(_selectedDate == null
+                    ? "No Date Chosen!"
+                    : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}'),
+                const SizedBox(
+                  width: 10,
                 ),
-              ))
-        ],
+                TextButton(
+                    onPressed: _showDatePicker,
+                    child: Text(
+                      "Choose Date",
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold),
+                    ))
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+                onPressed: () => _submitData(),
+                child: const Text(
+                  "Add Transaction",
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ))
+          ],
+        ),
       ),
     );
   }
