@@ -69,6 +69,7 @@ flutter:
   assets:
     - assets/instagram_bottom_navigation_bar/assets/vectors/
     - assets/instagram_bottom_navigation_bar/assets/images/
+    - assets/desktop_popup_icon.png
     - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -83,6 +84,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+     - family: PingFangHK
+       fonts:
+         - asset: assets/fonts/PingFangHK-Regular.ttf
      - family: OpenSans
        fonts:
          - asset: assets/fonts/OpenSans-Regular.ttf
