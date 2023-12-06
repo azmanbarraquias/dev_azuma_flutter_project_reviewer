@@ -20,7 +20,7 @@ class TransactionList extends StatelessWidget {
             ? Column(
                 children: [
                   SizedBox(
-                  height: boxConstraints.maxHeight * 0.1,
+                    height: boxConstraints.maxHeight * 0.1,
                     child: const Center(
                       child: Text('No Transaction added yet!',
                           style: TextStyle(fontSize: 20, color: Colors.black)),
@@ -47,13 +47,28 @@ class TransactionList extends StatelessWidget {
                           '${transactionsList[index].userID} ${transactionsList[index].title.capitalizeFirst}'),
                       subtitle: Text(DateFormat('dd/MM/yyyy hh:mm aa')
                           .format(transactionsList[index].dateTime)),
-                      trailing: IconButton(
-                          icon: Icon(
-                            Icons.delete,
-                            color: Theme.of(context).errorColor,
-                          ),
-                          onPressed: () =>
-                              {deleteUser(transactionsList[index].userID)}),
+                      trailing: checkDeviceWidth(context, 360)
+                          ? ElevatedButton.icon(
+                              onPressed: () =>
+                                  {deleteUser(transactionsList[index].userID)},
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateColor.resolveWith((states) =>
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .primary)),
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
+                              label: const Text('Delete'))
+                          : IconButton(
+                              icon: Icon(
+                                Icons.delete,
+                                color: Theme.of(context).errorColor,
+                              ),
+                              onPressed: () =>
+                                  {deleteUser(transactionsList[index].userID)}),
                       leading: CircleAvatar(
                         radius: 30,
                         child: Padding(
@@ -106,5 +121,9 @@ class TransactionList extends StatelessWidget {
               ),
       );
     });
+  }
+
+  bool checkDeviceWidth(context, double n) {
+    return MediaQuery.of(context).size.width > n;
   }
 }

@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'adaptive_button.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addNewTransaction;
@@ -27,12 +32,9 @@ class _NewTransactionState extends State<NewTransaction> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            TextField(
+            CupertinoTextField(
               onSubmitted: (_) => _submitData(),
-              decoration: const InputDecoration(
-                labelText: "Title",
-                contentPadding: EdgeInsets.all(10),
-              ),
+              placeholder: "Title",
               controller: titleController,
             ),
             TextField(
@@ -69,15 +71,10 @@ class _NewTransactionState extends State<NewTransaction> {
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(
-                onPressed: () => _submitData(),
-                child: const Text(
-                  "Add Transaction",
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ))
+            AdaptiveButton(
+              content: 'Add Transaction',
+              handler: _submitData,
+            )
           ],
         ),
       ),

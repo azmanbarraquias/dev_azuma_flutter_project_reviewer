@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +17,14 @@ void main() {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(
+    // Platform.isIOS
+    //     ? const CupertinoApp(
+    //         home: MyHomePage(),
+    //         debugShowCheckedModeBanner: false,
+    //         title: "Personal Expenses",
+    //         theme: CupertinoThemeData(primaryColor: Colors.red),
+    //       )
+    //     :
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Personal Expenses",
@@ -90,40 +101,55 @@ class _MyHomePageState extends State<MyHomePage> {
     final statusBarHeight = MediaQuery.of(context).padding.top;
     final screenHeight = MediaQuery.of(context).size.height;
     final screenOrientation = MediaQuery.of(context).orientation;
-    final appBar = AppBar(
-      backgroundColor: Theme.of(context).secondaryHeaderColor,
-      actions: [
-        IconButton(
-            onPressed: () {
-              _startAddNewTransaction(context);
-            },
-            icon: const Icon(
-              Icons.add,
-            ))
-      ],
-      title: const Text("Personal Expenses"),
-    );
 
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _startAddNewTransaction(context);
-        },
-        child: const Icon(Icons.add),
-      ),
-      appBar: appBar,
-      body: Container(
+    final Widget appBar = Platform.isIOS
+        ? CupertinoNavigationBar(
+            backgroundColor: const CupertinoThemeData().primaryColor,
+            middle: const Text("Personal Expenses"),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    _startAddNewTransaction(context);
+                  },
+                  child: const Icon(
+                    CupertinoIcons.add,
+                    color: Colors.black,
+                  ),
+                )
+              ],
+            ),
+          )
+        : AppBar(
+            backgroundColor: Theme.of(context).secondaryHeaderColor,
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    _startAddNewTransaction(context);
+                  },
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.black,
+                  ))
+            ],
+            title: const Text("Personal Expenses"),
+          );
+
+    final pageBody = SafeArea(
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (screenOrientation == Orientation.landscape)
                 Column(
                   children: [
                     SizedBox(
                       height: (screenHeight -
-                              appBar.preferredSize.height -
+                              (appBar as PreferredSizeWidget)
+                                  .preferredSize
+                                  .height -
                               statusBarHeight) *
                           0.1,
                       child: Row(
@@ -131,7 +157,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           if (screenOrientation == Orientation.landscape)
                             const Text("Show Chart"),
-                          Switch(
+                          Switch.adaptive(
+                              activeColor:
+                                  Theme.of(context).colorScheme.primary,
                               value: _showChart,
                               onChanged: (val) {
                                 setState(() {
@@ -142,16 +170,25 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     _showChart
-                        ? chartBar(screenHeight, appBar, statusBarHeight, 0.85)
+                        ? chartBar(screenHeight, (appBar).preferredSize.height,
+                            statusBarHeight, 0.85)
                         : transactionList(
-                            screenHeight, appBar, statusBarHeight, 0.85),
+                            screenHeight,
+                            (appBar).preferredSize.height,
+                            statusBarHeight,
+                            0.85),
                   ],
                 ),
               if (screenOrientation == Orientation.portrait)
                 Column(
                   children: [
-                    chartBar(screenHeight, appBar, statusBarHeight, 0.3),
-                    transactionList(screenHeight, appBar, statusBarHeight, 0.7),
+                    chartBar(
+                        screenHeight,
+                        (appBar as PreferredSizeWidget).preferredSize.height,
+                        statusBarHeight,
+                        0.3),
+                    transactionList(screenHeight, (appBar).preferredSize.height,
+                        statusBarHeight, 0.7),
                   ],
                 ),
             ],
@@ -159,21 +196,36 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: appBar as CupertinoNavigationBar,
+            child: pageBody,
+          )
+        : Scaffold(
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    onPressed: () {
+                      _startAddNewTransaction(context);
+                    },
+                    child: const Icon(Icons.add),
+                  ),
+            appBar: appBar as AppBar,
+            body: pageBody);
   }
 
-  SizedBox chartBar(
-      double screenHeight, AppBar appBar, double statusBarHeight, double size) {
+  SizedBox chartBar(double screenHeight, double appBarHeight,
+      double statusBarHeight, double size) {
     return SizedBox(
-        height: (screenHeight - appBar.preferredSize.height - statusBarHeight) *
-            size,
+        height: (screenHeight - appBarHeight - statusBarHeight) * size,
         child: Chart(recentTransactions: _recentTransactions));
   }
 
-  SizedBox transactionList(
-      double screenHeight, AppBar appBar, double statusBarHeight, double size) {
+  SizedBox transactionList(double screenHeight, double appBarHeight,
+      double statusBarHeight, double size) {
     return SizedBox(
-      height:
-          (screenHeight - appBar.preferredSize.height - statusBarHeight) * size,
+      height: (screenHeight - appBarHeight - statusBarHeight) * size,
       child: TransactionList(
         transactionsList: _userTransaction,
         deleteUser: _deleteTransaction,
