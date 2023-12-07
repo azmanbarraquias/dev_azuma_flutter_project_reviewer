@@ -7,7 +7,7 @@ void main() {
       appBar: AppBar(
         title: const Text('Desktop PopUp'),
       ),
-      body: Center(child: DesktopPopUp()),
+      body: const Center(child: DesktopPopUp()),
     ),
   ));
 }
@@ -21,6 +21,27 @@ class DesktopPopUp extends StatefulWidget {
 
 class _DesktopPopUpState extends State<DesktopPopUp> {
   bool _isChecked = false;
+
+  @override
+  void initState() {
+    // Tod0 implement initState
+    super.initState();
+  }
+
+
+
+
+  @override
+  void didUpdateWidget(covariant DesktopPopUp oldWidget) {
+    // TOD0: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

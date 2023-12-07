@@ -1,3 +1,4 @@
+import 'package:dev_azuma/a_real_apps/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
@@ -38,48 +39,7 @@ class TransactionList extends StatelessWidget {
             : ListView.builder(
                 itemCount: transactionsList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                    elevation: 5,
-                    child: ListTile(
-                      title: Text(
-                          '${transactionsList[index].userID} ${transactionsList[index].title.capitalizeFirst}'),
-                      subtitle: Text(DateFormat('dd/MM/yyyy hh:mm aa')
-                          .format(transactionsList[index].dateTime)),
-                      trailing: checkDeviceWidth(context, 360)
-                          ? ElevatedButton.icon(
-                              onPressed: () =>
-                                  {deleteUser(transactionsList[index].userID)},
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateColor.resolveWith((states) =>
-                                          Theme.of(context)
-                                              .colorScheme
-                                              .primary)),
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                              label: const Text('Delete'))
-                          : IconButton(
-                              icon: Icon(
-                                Icons.delete,
-                                color: Theme.of(context).errorColor,
-                              ),
-                              onPressed: () =>
-                                  {deleteUser(transactionsList[index].userID)}),
-                      leading: CircleAvatar(
-                        radius: 30,
-                        child: Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: FittedBox(
-                              child:
-                                  Text('\$${transactionsList[index].amount}')),
-                        ),
-                      ),
-                    ),
-                  );
+                  return TransactionItem(transaction: transactionsList[index], deleteUser: deleteUser);
                   return Card(
                     child: Row(
                       children: [
@@ -127,3 +87,4 @@ class TransactionList extends StatelessWidget {
     return MediaQuery.of(context).size.width > n;
   }
 }
+

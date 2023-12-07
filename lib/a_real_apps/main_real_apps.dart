@@ -96,11 +96,59 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Widget _buildLandscapeContent(Widget appBar, double screenHeight,
+      double statusBarHeight, MediaQueryData mqd) {
+    return Column(
+      children: [
+        SizedBox(
+          height: (screenHeight -
+                  (appBar as PreferredSizeWidget).preferredSize.height -
+                  statusBarHeight) *
+              0.1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (mqd.orientation == Orientation.landscape)
+                const Text("Show Chart"),
+              Switch.adaptive(
+                  activeColor: Theme.of(context).colorScheme.primary,
+                  value: _showChart,
+                  onChanged: (val) {
+                    setState(() {
+                      _showChart = val;
+                    });
+                  })
+            ],
+          ),
+        ),
+        _showChart
+            ? chartBar(screenHeight, (appBar).preferredSize.height,
+                statusBarHeight, 0.85)
+            : transactionList(screenHeight, (appBar).preferredSize.height,
+                statusBarHeight, 0.85),
+      ],
+    );
+  }
+
+  List<SizedBox> _buildPortraitContent(Widget appBar, double screenHeight,
+      double statusBarHeight, MediaQueryData mqd) {
+    return [
+        chartBar(
+            screenHeight,
+            (appBar as PreferredSizeWidget).preferredSize.height,
+            statusBarHeight,
+            0.3),
+        transactionList(
+            screenHeight, (appBar).preferredSize.height, statusBarHeight, 0.7),
+      ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    final statusBarHeight = MediaQuery.of(context).padding.top;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenOrientation = MediaQuery.of(context).orientation;
+    final mediaQuery = MediaQuery.of(context);
+    final statusBarHeight = mediaQuery.padding.top;
+    final screenHeight = mediaQuery.size.height;
+    final screenOrientation = mediaQuery.orientation;
 
     final Widget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
@@ -143,54 +191,11 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             children: [
               if (screenOrientation == Orientation.landscape)
-                Column(
-                  children: [
-                    SizedBox(
-                      height: (screenHeight -
-                              (appBar as PreferredSizeWidget)
-                                  .preferredSize
-                                  .height -
-                              statusBarHeight) *
-                          0.1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (screenOrientation == Orientation.landscape)
-                            const Text("Show Chart"),
-                          Switch.adaptive(
-                              activeColor:
-                                  Theme.of(context).colorScheme.primary,
-                              value: _showChart,
-                              onChanged: (val) {
-                                setState(() {
-                                  _showChart = val;
-                                });
-                              })
-                        ],
-                      ),
-                    ),
-                    _showChart
-                        ? chartBar(screenHeight, (appBar).preferredSize.height,
-                            statusBarHeight, 0.85)
-                        : transactionList(
-                            screenHeight,
-                            (appBar).preferredSize.height,
-                            statusBarHeight,
-                            0.85),
-                  ],
-                ),
+                _buildLandscapeContent(
+                    appBar, screenHeight, statusBarHeight, mediaQuery),
               if (screenOrientation == Orientation.portrait)
-                Column(
-                  children: [
-                    chartBar(
-                        screenHeight,
-                        (appBar as PreferredSizeWidget).preferredSize.height,
-                        statusBarHeight,
-                        0.3),
-                    transactionList(screenHeight, (appBar).preferredSize.height,
-                        statusBarHeight, 0.7),
-                  ],
-                ),
+                ..._buildPortraitContent(
+                    appBar, screenHeight, statusBarHeight, mediaQuery),
             ],
           ),
         ),
@@ -198,21 +203,29 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     return Platform.isIOS
-        ? CupertinoPageScaffold(
-            navigationBar: appBar as CupertinoNavigationBar,
-            child: pageBody,
-          )
-        : Scaffold(
-            floatingActionButton: Platform.isIOS
-                ? Container()
-                : FloatingActionButton(
-                    onPressed: () {
-                      _startAddNewTransaction(context);
-                    },
-                    child: const Icon(Icons.add),
-                  ),
-            appBar: appBar as AppBar,
-            body: pageBody);
+        ? _buildCupertinoPageScaffoldAppBar(appBar, pageBody)
+        : _buildScaffoldAppBar(context, appBar, pageBody);
+  }
+
+  Widget _buildScaffoldAppBar(BuildContext context, Widget appBar, SafeArea pageBody) {
+    return Scaffold(
+          floatingActionButton: Platform.isIOS
+              ? Container()
+              : FloatingActionButton(
+                  onPressed: () {
+                    _startAddNewTransaction(context);
+                  },
+                  child: const Icon(Icons.add),
+                ),
+          appBar: appBar as AppBar,
+          body: pageBody);
+  }
+
+  Widget _buildCupertinoPageScaffoldAppBar(Widget appBar, SafeArea pageBody) {
+    return CupertinoPageScaffold(
+          navigationBar: appBar as CupertinoNavigationBar,
+          child: pageBody,
+        );
   }
 
   SizedBox chartBar(double screenHeight, double appBarHeight,
