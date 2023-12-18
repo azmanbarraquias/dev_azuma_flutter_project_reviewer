@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'gridview_selector.dart';
+
 main() {
   runApp(const MaterialApp(
     home: Scaffold(
@@ -23,7 +25,16 @@ class BottomSheetSample extends StatelessWidget {
           const Text("Bottom Sheet Sample"),
           ElevatedButton(
               onPressed: () {
-                _displayBottomSheet(context);
+                showModalBottomSheet(
+                    context: context,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+                    builder: (context) => const SizedBox(
+                      height: 50 + 204,
+                      child: Center(
+                        child: AmountBottomSheetBody(),
+                      ),
+                    ));
               },
               child: const Text("Open Bottom Sheet"))
         ],
@@ -32,7 +43,7 @@ class BottomSheetSample extends StatelessWidget {
   }
 }
 
-Future _displayBottomSheet(BuildContext context) {
+Future _displayBottomSheet(BuildContext context)  async {
   return showModalBottomSheet(
       context: context,
       backgroundColor: Colors.amberAccent,
