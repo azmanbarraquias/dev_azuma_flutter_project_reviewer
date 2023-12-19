@@ -39,6 +39,7 @@ dependencies:
   get: ^4.6.6
   image_picker: ^1.0.4
   intl: ^0.18.1
+  popover: ^0.2.8+2
 
 dev_dependencies:
   flutter_test:
