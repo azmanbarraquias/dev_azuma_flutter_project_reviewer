@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:popover/popover.dart';
 
-void main() => runApp(PopoverExample());
-
 class PopoverExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -12,39 +10,7 @@ class PopoverExample extends StatelessWidget {
         body: const SafeArea(
           child: Padding(
             padding: EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Button(),
-                    Button(),
-                    Button(),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Button(),
-                    Button(),
-                    Button(),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Button(),
-                    Button(),
-                    Button(),
-                  ],
-                ),
-              ],
-            ),
+            child: Button(),
           ),
         ),
       ),
@@ -70,50 +36,72 @@ class Button extends StatelessWidget {
         onTap: () {
           showPopover(
             context: context,
-            bodyBuilder: (context) {
-              return ListView(
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(5),
-                children: const [
-                  SizedBox(
-                    height: 46,
-                    child: Center(child: Text('群组简介')),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Divider(),
-                  ),
-                  SizedBox(
-                    height: 46,
-                    child: Center(child: Text('中奖公告')),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Divider(),
-                  ),
-                  SizedBox(
-                    height: 46,
-                    child: Center(child: Text('开奖结果')),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Divider(),
-                  ),
-                  SizedBox(
-                    height: 46,
-                    child: Center(child: Text('管理员信息')),
-                  ),
-                ],
-              );
-            },
+            bodyBuilder: (context) => const ListItems(),
             onPop: () => print('Popover was popped!'),
-            direction: PopoverDirection.top,
-            backgroundColor: Colors.white,
-            width: 120,
+            direction: PopoverDirection.bottom,
+            width: 200,
+            height: 400,
             arrowHeight: 15,
             arrowWidth: 30,
           );
         },
+      ),
+    );
+  }
+}
+
+class ListItems extends StatelessWidget {
+  const ListItems({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: ListView(
+        padding: const EdgeInsets.all(8),
+        children: [
+          InkWell(
+            onTap: () {
+
+
+            },
+            child: Container(
+              height: 50,
+              color: Colors.amber[100],
+              child: const Center(child: Text('Entry A')),
+            ),
+          ),
+          const Divider(),
+          Container(
+            height: 50,
+            color: Colors.amber[200],
+            child: const Center(child: Text('Entry B')),
+          ),
+          const Divider(),
+          Container(
+            height: 50,
+            color: Colors.amber[300],
+            child: const Center(child: Text('Entry C')),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+        automaticallyImplyLeading: false,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Go back!'),
+        ),
       ),
     );
   }
