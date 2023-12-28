@@ -183,62 +183,65 @@ Future _displayBottomSheet(BuildContext context) async {
   var commonTextStyle =
       const TextStyle(fontWeight: FontWeight.w600, fontSize: 17);
   return showModalBottomSheet(
-      context: context,
-      backgroundColor: const Color.fromRGBO(243, 243, 243, 1),
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
-      builder: (context) => SizedBox(
-            height: 400,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    context: context,
+    backgroundColor: const Color.fromRGBO(243, 243, 243, 1),
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+    builder: (context) => SizedBox(
+      height: 400,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "取消",
+                    style: commonTextStyle,
+                  )),
+              Text(
+                "消息过滤",
+                style: commonTextStyle,
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "完成",
+                    style: commonTextStyle,
+                  )),
+            ],
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Column(
                   children: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "取消",
-                          style: commonTextStyle,
-                        )),
-                    Text(
-                      "消息过滤",
-                      style: commonTextStyle,
+                    CustomSwitchGroup(
+                      switchList: switchList1,
                     ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "完成",
-                          style: commonTextStyle,
-                        )),
+                    CustomSwitchGroup(
+                      header: '公告信息',
+                      switchList: switchList2,
+                    ),
+                    CustomSwitchGroup(
+                      header: '系统信息',
+                      switchList: switchList3,
+                    ),
                   ],
                 ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Column(
-                        children: [
-                          CustomSwitchGroup(
-                            switchList: switchList1,
-                          ),
-                          CustomSwitchGroup(
-                            header: '公告信息',
-                            switchList: switchList2,
-                          ),
-                          CustomSwitchGroup(
-                            header: '系统信息',
-                            switchList: switchList3,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
-          ));
+          )
+        ],
+      ),
+    ),
+  ).then((value) {
+    print('Test123');
+  });
 }
