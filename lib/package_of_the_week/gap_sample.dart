@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: SafeArea(
-        child: Sing(
+        child: Column(
           children: [
             Gap.expand(20, color: Colors.yellow),
             Gap(20),
