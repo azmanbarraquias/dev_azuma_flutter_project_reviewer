@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -66,6 +68,7 @@ class _HomeBodyState extends State<HomeBody> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
   }
 
+  // called call when child also rebuild
   @override
   void didUpdateWidget(HomeBody oldWidget) {
     xPrint('_HomeBodyState didUpdateWidget()');
@@ -79,6 +82,23 @@ class _HomeBodyState extends State<HomeBody> with WidgetsBindingObserver {
     xPrint('_HomeBodyState didChangeAppLifecycleState() $state');
   }
 
+  @override
+  void didHaveMemoryPressure() {
+    xPrint("didHaveMemoryPressure");
+    super.didHaveMemoryPressure();
+  }
+
+  @override
+  void didChangeLocales(List<Locale>? locales) {
+    xPrint("didChangeLocales $locales");
+    super.didChangeLocales(locales);
+  }
+
+  @override
+  Future<AppExitResponse> didRequestAppExit() {
+    xPrint("didRequestAppExit");
+    return super.didRequestAppExit();
+  }
 }
 
 void xPrint(String value) {

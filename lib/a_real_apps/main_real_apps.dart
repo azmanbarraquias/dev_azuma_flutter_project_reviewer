@@ -133,24 +133,18 @@ class _MyHomePageState extends State<MyHomePage> {
   List<SizedBox> _buildPortraitContent(Widget appBar, double screenHeight,
       double statusBarHeight, MediaQueryData mqd) {
     return [
-        chartBar(
-            screenHeight,
-            (appBar as PreferredSizeWidget).preferredSize.height,
-            statusBarHeight,
-            0.3),
-        transactionList(
-            screenHeight, (appBar).preferredSize.height, statusBarHeight, 0.7),
-      ];
+      chartBar(
+          screenHeight,
+          (appBar as PreferredSizeWidget).preferredSize.height,
+          statusBarHeight,
+          0.3),
+      transactionList(
+          screenHeight, (appBar).preferredSize.height, statusBarHeight, 0.7),
+    ];
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final statusBarHeight = mediaQuery.padding.top;
-    final screenHeight = mediaQuery.size.height;
-    final screenOrientation = mediaQuery.orientation;
-
-    final Widget appBar = Platform.isIOS
+  Widget _buildAppBar() {
+    return Platform.isIOS
         ? CupertinoNavigationBar(
             backgroundColor: const CupertinoThemeData().primaryColor,
             middle: const Text("Personal Expenses"),
@@ -183,6 +177,16 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
             title: const Text("Personal Expenses"),
           );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final statusBarHeight = mediaQuery.padding.top;
+    final screenHeight = mediaQuery.size.height;
+    final screenOrientation = mediaQuery.orientation;
+
+    final Widget appBar = _buildAppBar();
 
     final pageBody = SafeArea(
       child: Container(
@@ -207,25 +211,26 @@ class _MyHomePageState extends State<MyHomePage> {
         : _buildScaffoldAppBar(context, appBar, pageBody);
   }
 
-  Widget _buildScaffoldAppBar(BuildContext context, Widget appBar, SafeArea pageBody) {
+  Widget _buildScaffoldAppBar(
+      BuildContext context, Widget appBar, SafeArea pageBody) {
     return Scaffold(
-          floatingActionButton: Platform.isIOS
-              ? Container()
-              : FloatingActionButton(
-                  onPressed: () {
-                    _startAddNewTransaction(context);
-                  },
-                  child: const Icon(Icons.add),
-                ),
-          appBar: appBar as AppBar,
-          body: pageBody);
+        floatingActionButton: Platform.isIOS
+            ? Container()
+            : FloatingActionButton(
+                onPressed: () {
+                  _startAddNewTransaction(context);
+                },
+                child: const Icon(Icons.add),
+              ),
+        appBar: appBar as AppBar,
+        body: pageBody);
   }
 
   Widget _buildCupertinoPageScaffoldAppBar(Widget appBar, SafeArea pageBody) {
     return CupertinoPageScaffold(
-          navigationBar: appBar as CupertinoNavigationBar,
-          child: pageBody,
-        );
+      navigationBar: appBar as CupertinoNavigationBar,
+      child: pageBody,
+    );
   }
 
   SizedBox chartBar(double screenHeight, double appBarHeight,

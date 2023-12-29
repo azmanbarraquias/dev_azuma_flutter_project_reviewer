@@ -36,48 +36,8 @@ class TransactionList extends StatelessWidget {
                   )
                 ],
               )
-            : ListView.builder(
-                itemCount: transactionsList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return TransactionItem(transaction: transactionsList[index], deleteUser: deleteUser);
-                  return Card(
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 100,
-                          margin: const EdgeInsets.all(15),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2)),
-                          child: Text(
-                            '\$${transactionsList[index].amount.toStringAsFixed(2)}',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                                color: Theme.of(context).primaryColor),
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              transactionsList[index].title,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              DateFormat('dd/MM/yyyy hh:mm aa')
-                                  .format(transactionsList[index].dateTime),
-                              style: const TextStyle(color: Colors.grey),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                },
+            : ListView(children: transactionsList.map((e) => TransactionItem(key: ValueKey(e.userID), transaction: e, deleteUser: deleteUser)).toList(),
+
               ),
       );
     });
@@ -87,4 +47,3 @@ class TransactionList extends StatelessWidget {
     return MediaQuery.of(context).size.width > n;
   }
 }
-
