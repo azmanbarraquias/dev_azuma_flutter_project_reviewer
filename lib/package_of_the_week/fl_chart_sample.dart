@@ -19,7 +19,10 @@ class MyPage extends StatelessWidget {
     return PieChart(
       PieChartData(sections: [
         PieChartSectionData(
-            value: 50, title: 'test', showTitle: true, color: Colors.pink),   PieChartSectionData(
+            value: 50, title: 'test', showTitle: true, color: Colors.pink),
+        PieChartSectionData(
+            value: 50, title: 'test', showTitle: true, color: Colors.green),
+        PieChartSectionData(
             value: 50, title: 'test', showTitle: true, color: Colors.red),
       ]),
     );
