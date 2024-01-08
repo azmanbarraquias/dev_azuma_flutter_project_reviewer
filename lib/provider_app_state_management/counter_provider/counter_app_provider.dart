@@ -13,9 +13,13 @@ void main() {
     // Provider, but then we would have to listen to Counter ourselves.
     //
     // Read Provider's docs to learn about all the available providers.
+    //   ChangeNotifierProvider(
+    //     create: (context) => Counter(),
+    //     child: const MyApp(),
+    //   )
       MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => Counter()),
+          ChangeNotifierProvider(create: (context) => Counter1()),
           ChangeNotifierProvider(create: (context) => Counter2()),
         ],
         child: const MyApp(),
@@ -25,9 +29,9 @@ void main() {
 
 /// Simplest possible model, with just one field.
 ///
-/// [ChangeNotifier] is a class in `flutter:foundation`. [Counter] does
+/// [ChangeNotifier] is a class in `flutter:foundation`. [Counter1] does
 /// _not_ depend on Provider.
-class Counter with ChangeNotifier {
+class Counter1 with ChangeNotifier {
   int value = 0;
 
   void increment() {
@@ -35,10 +39,6 @@ class Counter with ChangeNotifier {
     notifyListeners();
   }
 
-  void decrement() {
-    value -= 1;
-    notifyListeners();
-  }
 }
 
 class Counter2 with ChangeNotifier {
@@ -49,10 +49,6 @@ class Counter2 with ChangeNotifier {
     notifyListeners();
   }
 
-  void decrement() {
-    value -= 2;
-    notifyListeners();
-  }
 }
 
 class MyApp extends StatelessWidget {
@@ -75,20 +71,19 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Demo Home Page'),
+        title: const Text('Demo'),
         actions: [
-          Consumer<Counter2>(builder: (context, counter, child) {
+          Consumer<Counter1>(builder: (context, counter, child) {
             return IconButton(
-                onPressed: () {
-                  counter.increment();
-                },
+                onPressed: () => counter.increment()
+                ,
                 icon: const Icon(Icons.add));
           }),
           IconButton(
               onPressed: () {
-                Provider.of<Counter>(context, listen: false).decrement();
+                Provider.of<Counter2>(context, listen: false).increment();
               },
-              icon: const Icon(Icons.exposure_minus_1_rounded)),
+              icon: const Icon(Icons.add, color: Colors.red,)),
         ],
       ),
       body: Center(
@@ -97,7 +92,7 @@ class MyHomePage extends StatelessWidget {
           children: [
             const Text('You have pushed the button this many times:'),
             Text(
-              '${Provider.of<Counter2>(context, listen: true).value}',
+              '1: ${Provider.of<Counter1>(context, listen: true).value}',
               style: Theme.of(context).textTheme.headlineLarge,
             ),
 
@@ -105,9 +100,9 @@ class MyHomePage extends StatelessWidget {
             // and retrieves its model (Counter, in this case).
             // Then it uses that model to build widgets, and will trigger
             // rebuilds if the model is updated.
-            Consumer<Counter>(builder: (context, counter, child) {
+            Consumer<Counter2>(builder: (context, counter, child) {
               return Text(
-                '${counter.value}',
+                '2: ${counter.value}',
                 style: Theme.of(context).textTheme.headlineLarge,
               );
             }),
