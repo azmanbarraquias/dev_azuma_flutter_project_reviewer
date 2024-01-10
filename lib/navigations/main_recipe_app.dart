@@ -1,4 +1,7 @@
+import 'package:dev_azuma/navigations/widgets/cateory_meals_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'widgets/categories_screen.dart';
 
 void main() {
   runApp(
@@ -13,30 +16,35 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Yakitati Recipe\'s',
-      theme: ThemeData(primarySwatch: Colors.deepPurple, useMaterial3: true),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: const Text('Hello'),
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+        hintColor: Colors.amber,
+        canvasColor: Colors.blueAccent,
+        useMaterial3: true,
+        textTheme: ThemeData.light().textTheme.copyWith(
+              bodyLarge: const TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              bodyMedium: const TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              bodySmall: const TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              titleLarge:
+                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              titleMedium:
+                  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              titleSmall:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
       ),
-      body: const SafeArea(
-        child: SizedBox(),
-      ),
+      initialRoute: '/', // default is /
+      // home: const CategoriesScreen(),
+      routes: {
+        '/': (ctx) => const CategoriesScreen(),
+        CategoryMealsScreen.routeName : (ctx) => const CategoryMealsScreen(),
+      },
     );
   }
 }
