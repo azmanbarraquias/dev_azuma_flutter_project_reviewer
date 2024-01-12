@@ -7,6 +7,7 @@ import 'source_code_view.dart';
 class WidgetWithCodeView extends SourceCodeView {
   // If not given, will just show the SourceCodeView (see https://github.com/X-Wei/widget_with_codeview/issues/10).
   final Widget? child;
+
   // Can be used to add a hook when switching tabs.
   final void Function(TabController)? tabChangeListener;
 
@@ -76,7 +77,7 @@ class _WidgetWithCodeViewState extends SourceCodeViewState
     super.dispose();
   }
 
-  String get routeName => '/${this.runtimeType.toString()}';
+  String get routeName => '/${runtimeType.toString()}';
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +97,7 @@ class _WidgetWithCodeViewState extends SourceCodeViewState
           : TabBarView(
               controller: _tabController,
               children: <Widget>[
-                _AlwaysAliveWidget(child: this.child!),
+                _AlwaysAliveWidget(child: child!),
                 _AlwaysAliveWidget(child: sourceCodeView),
               ],
             ),
@@ -109,7 +110,7 @@ class _WidgetWithCodeViewState extends SourceCodeViewState
 class _AlwaysAliveWidget extends StatefulWidget {
   final Widget child;
 
-  const _AlwaysAliveWidget({Key? key, required this.child}) : super(key: key);
+  const _AlwaysAliveWidget({super.key, required this.child});
 
   @override
   _AlwaysAliveWidgetState createState() => _AlwaysAliveWidgetState();
@@ -120,7 +121,7 @@ class _AlwaysAliveWidgetState extends State<_AlwaysAliveWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context); // This build method is annotated "@mustCallSuper".
-    return this.widget.child;
+    return widget.child;
   }
 
   @override
@@ -128,11 +129,12 @@ class _AlwaysAliveWidgetState extends State<_AlwaysAliveWidget>
 }
 
 class _ColoredTabBar extends Container implements PreferredSizeWidget {
+
+  @override
   final Color color;
   final TabBar tabBar;
 
-  _ColoredTabBar({Key? key, required this.color, required this.tabBar})
-      : super(key: key);
+  _ColoredTabBar({required this.color, required this.tabBar});
 
   @override
   Size get preferredSize => tabBar.preferredSize;

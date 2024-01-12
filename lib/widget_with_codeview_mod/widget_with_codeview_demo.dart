@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'package:dev_azuma/template_lite.dart';
 
-
-
-
 void main() {
   runApp(MyApp());
 }
@@ -21,22 +18,24 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData.dark(),
       home: Scaffold(
-      appBar: AppBar(title: Text('widget_with_codeview'),),
+        appBar: AppBar(
+          title: const Text('widget_with_codeview'),
+        ),
         body: WidgetWithCodeView(
-        headerWidget: Text('Test'),
+          headerWidget: const Text('Test'),
           filePath: 'lib/template_lite.dart',
+
           /// [codeLinkPrefix] is optional. When it's specified, two more buttons
           /// (open-code-in-browser, copy-code-link) will be added in the code view.
-          codeLinkPrefix: 'https://github.com/azmanbarraquias/dev_azuma_flutter_project_reviewer/blob/master/lib/main.dart',
+          codeLinkPrefix:
+              'https://github.com/azmanbarraquias/dev_azuma_flutter_project_reviewer/blob/master/lib/main.dart',
           labelBackgroundColor: Theme.of(context).canvasColor,
           labelTextStyle:
-          TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color),
+              TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color),
           showLabelText: true,
-          child: MyPage(),
+          child: const MyPage(),
         ),
       ),
     );
   }
 }
-
-
