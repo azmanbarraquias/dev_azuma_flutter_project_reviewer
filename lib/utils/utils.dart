@@ -24,4 +24,10 @@ class Utils {
     }
     return IconData(int.parse(hex), fontFamily: 'MaterialIcons');
   }
+
+  static Color getRandomColor() {
+    return Colors.accents[Random().nextInt(
+      Colors.accents.length,
+    )];
+  }
 }

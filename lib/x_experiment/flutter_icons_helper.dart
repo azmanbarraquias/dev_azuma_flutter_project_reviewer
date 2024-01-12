@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: const MyPage(),
       theme: ThemeData(),
     );
@@ -29,6 +30,8 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
   late Map<String, IconData> _foundUsers = {};
+
+  int gridItemCrossAxisCount = 5;
 
   @override
   initState() {
@@ -54,31 +57,59 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter Icon finder'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  if (gridItemCrossAxisCount >= 10) {
+                    return;
+                  }
+                  gridItemCrossAxisCount++;
+                });
+              },
+              icon: const Icon(Icons.add_circle_outline_outlined)),
+              Text('$gridItemCrossAxisCount'),
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  if (gridItemCrossAxisCount <= 1) {
+                    return;
+                  }
+                  gridItemCrossAxisCount--;
+                });
+              },
+              icon: const Icon(Icons.remove_circle_outline)),
+        ],
+      ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      _runFilter(value);
-                    });
-                  },
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Search',
-                      suffixIcon: Icon(Icons.search)),
-                ),
+        child: Column(
+          children: [
+            Container(
+              height: 40,
+              margin: const EdgeInsets.all(5),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: TextField(
+                textAlignVertical: TextAlignVertical.center,
+                cursorHeight: 20,
+                onChanged: (value) {
+                  setState(() {
+                    _runFilter(value);
+                  });
+                },
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Search',
+                    suffixIcon: Icon(Icons.search)),
               ),
-              Expanded(
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(5),
                 child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: gridItemCrossAxisCount,
                     ),
                     itemCount: _foundUsers.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -88,9 +119,7 @@ class _MyPageState extends State<MyPage> {
                         triggerMode: TooltipTriggerMode.tap,
                         onTriggered: () async {
                           xPrint('$currentIcon');
-                          await Clipboard.setData(
-                              ClipboardData(text: 'Icons.${currentIcon.key}'));
-                          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Icons.${icons_data.entries.elementAt(index).key}, has been copy')));
+                          await Clipboard.setData(ClipboardData(text: 'Icons.${currentIcon.key}'));
                         },
                         message: currentIcon.key ?? '',
                         child: Card(
@@ -103,11 +132,17 @@ class _MyPageState extends State<MyPage> {
                       );
                     }),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  Future feedbackSnackBar(index) async {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+            'Icons.${icons_data.entries.elementAt(index).key}, has been copy')));
   }
 
   ListView buildListView() {
