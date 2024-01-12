@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 
-const flutterColor = Color(0xFF40D0FD);
+const flutterColor = Color.fromRGBO(172, 97, 185, 1);
 
 void main() => runApp(MyApp());
 
@@ -12,9 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.dark(),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -49,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             GlowButton(
+              spreadRadius: 2,
               onPressed: () {},
               color: flutterColor,
               child: const Text('Glow'),
@@ -76,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: flutterColor,
                 glowColor: iconSelected ? flutterColor : Colors.transparent,
                 size: 64,
-                blurRadius: 9,
+                blurRadius: 10,
               ),
             ),
             const SizedBox(height: 32),
