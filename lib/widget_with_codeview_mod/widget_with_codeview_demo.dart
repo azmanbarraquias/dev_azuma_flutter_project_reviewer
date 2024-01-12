@@ -16,24 +16,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark(),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('widget_with_codeview'),
-        ),
-        body: WidgetWithCodeView(
-          headerWidget: const Text('Test'),
-          filePath: 'lib/template_lite.dart',
-
-          /// [codeLinkPrefix] is optional. When it's specified, two more buttons
-          /// (open-code-in-browser, copy-code-link) will be added in the code view.
-          codeLinkPrefix:
-              'https://github.com/azmanbarraquias/dev_azuma_flutter_project_reviewer/blob/master/lib/main.dart',
-          labelBackgroundColor: Theme.of(context).canvasColor,
-          labelTextStyle:
-              TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color),
-          showLabelText: true,
-          child: const MyPage(),
+        body: SafeArea(
+          child: WidgetWithCodeView(
+            headerWidget: const Text('Test'),
+            filePath: 'lib/template_lite.dart',
+          
+            /// [codeLinkPrefix] is optional. When it's specified, two more buttons
+            /// (open-code-in-browser, copy-code-link) will be added in the code view.
+            codeLinkPrefix:
+                'https://github.com/azmanbarraquias/dev_azuma_flutter_project_reviewer/blob/master/lib/main.dart',
+            labelBackgroundColor: Theme.of(context).canvasColor,
+            labelTextStyle:
+                TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color),
+            showLabelText: true,
+            child: const MyPage(),
+          ),
         ),
       ),
     );
