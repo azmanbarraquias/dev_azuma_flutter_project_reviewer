@@ -83,7 +83,6 @@ flutter:
 
     # Include a single source code file:
     # Include all files under a subfoler by adding trailing "/":
-    - lib/widget_with_codeview/
     - lib/template_lite.dart
 
 

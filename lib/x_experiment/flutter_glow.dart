@@ -75,7 +75,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: flutterColor,
                 glowColor: iconSelected ? flutterColor : Colors.transparent,
                 size: 64,
-                blurRadius: 10,
+                blurRadius: 5,
+
+
               ),
             ),
             const SizedBox(height: 32),
