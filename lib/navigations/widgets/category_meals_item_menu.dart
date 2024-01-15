@@ -1,4 +1,4 @@
-import 'package:dev_azuma/navigations/widgets/cateory_meals_screen.dart';
+import 'package:dev_azuma/navigations/widgets/category_meals_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -11,8 +11,9 @@ class CategoryItem extends StatelessWidget {
 
   void selectCategory(ctx) {
     Navigator.of(ctx).pushNamed(
-      CategoryMealsScreen.routeName, arguments: {'id': id, 'title': title},
-      // MaterialPageRoute(
+      CategoryMealsScreen.routeName,
+      arguments: {'id': id, 'title': title, 'color': color},
+      // .push(MaterialPageRoute(
       //   builder: (_) {
       //     return CategoryMealsScreen(
       //       categoryId: id,

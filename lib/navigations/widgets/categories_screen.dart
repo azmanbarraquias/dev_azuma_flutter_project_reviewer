@@ -1,4 +1,4 @@
-import 'package:dev_azuma/navigations/widgets/category_item.dart';
+import 'package:dev_azuma/navigations/widgets/category_meals_item_menu.dart';
 import 'package:flutter/material.dart';
 
 import '../models/dummy_data.dart';
