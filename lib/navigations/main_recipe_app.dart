@@ -1,7 +1,9 @@
-import 'package:dev_azuma/navigations/widgets/category_meals_details_screen.dart';
+import 'package:dev_azuma/x_experiment/flutter_lifecycle.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/categories_screen.dart';
+import 'screen/categories_screen.dart';
+import 'screen/category_meals_details_screen.dart';
+import 'screen/meal_detail_screen.dart';
 
 void main() {
   runApp(
@@ -39,6 +41,10 @@ class MyApp extends StatelessWidget {
               titleSmall:
                   const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
+        appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.white),
+          titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+        ),
       ),
       initialRoute: '/',
       // default is /
@@ -46,6 +52,16 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (ctx) => const CategoriesScreen(),
         CategoryMealsScreen.routeName: (ctx) => const CategoryMealsScreen(),
+        MealDetailScreen.routeName: (ctx) => const MealDetailScreen(),
+      },
+      onGenerateRoute: (setting) {
+        xPrint(setting.arguments.toString());
+        return MaterialPageRoute(builder: (ctx) => const CategoriesScreen());
+      },
+      onUnknownRoute: (setting) {
+        //404
+        xPrint(setting.arguments.toString());
+        return MaterialPageRoute(builder: (ctx) => const CategoriesScreen());
       },
     );
   }

@@ -1,7 +1,7 @@
-import 'package:dev_azuma/navigations/widgets/category_meals_item_menu.dart';
 import 'package:flutter/material.dart';
 
-import '../models/dummy_data.dart';
+import '../other/dummy_data.dart';
+import '../widgets/category_meals_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -23,11 +23,7 @@ class CategoriesScreen extends StatelessWidget {
             mainAxisSpacing: 20,
           ),
           children: DUMMY_CATEGORIES
-              .map((e) => CategoryItem(
-                    title: e.title,
-                    color: e.color,
-                    id: e.id,
-                  ))
+              .map((category) => CategoryItem(category: category))
               .toList(),
         ),
       ),

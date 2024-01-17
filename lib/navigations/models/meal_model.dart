@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 enum Complexity { simple, challenging, hard }
 
 enum Affordability { affordable, pricey, luxurious }
@@ -19,6 +17,10 @@ class Meal {
   final bool isVegetarian;
   final bool isLactoseFree;
 
+  String get complexityValue => complexity.name.capitalize();
+
+  String get affordabilityValue => affordability.name.capitalize();
+
   const Meal(
       {required this.id,
       required this.categories,
@@ -33,4 +35,10 @@ class Meal {
       required this.isVegan,
       required this.isVegetarian,
       required this.isLactoseFree});
+}
+
+extension StringExtension on String {
+  String capitalize() {
+    return '${this[0].toUpperCase()}${substring(1).toLowerCase()}';
+  }
 }

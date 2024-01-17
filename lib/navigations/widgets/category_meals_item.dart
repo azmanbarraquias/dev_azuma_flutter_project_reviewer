@@ -1,18 +1,19 @@
-import 'package:dev_azuma/navigations/widgets/category_meals_details_screen.dart';
+import 'package:dev_azuma/navigations/models/category_model.dart';
 import 'package:flutter/material.dart';
+
+import '../screen/category_meals_details_screen.dart';
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem(
-      {super.key, required this.title, required this.color, required this.id});
+      {super.key, required this.category});
 
-  final String id;
-  final String title;
-  final Color color;
+  final Category category;
+
 
   void selectCategory(ctx) {
     Navigator.of(ctx).pushNamed(
       CategoryMealsScreen.routeName,
-      arguments: {'id': id, 'title': title, 'color': color},
+      arguments: {'category': category},
       // .push(MaterialPageRoute(
       //   builder: (_) {
       //     return CategoryMealsScreen(
@@ -35,15 +36,15 @@ class CategoryItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             gradient: LinearGradient(
               colors: [
-                color.withOpacity(0.7),
-                color,
+                category.color.withOpacity(0.7),
+                category.color,
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             )),
         padding: const EdgeInsets.all(15),
         child: Text(
-          title,
+          category.title,
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
