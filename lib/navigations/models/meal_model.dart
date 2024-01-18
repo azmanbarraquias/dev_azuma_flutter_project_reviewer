@@ -21,20 +21,22 @@ class Meal {
 
   String get affordabilityValue => affordability.name.capitalize();
 
-  const Meal(
-      {required this.id,
-      required this.categories,
-      required this.title,
-      required this.imageUrl,
-      required this.ingredients,
-      required this.steps,
-      required this.duration,
-      required this.complexity,
-      required this.affordability,
-      required this.isGlutenFree,
-      required this.isVegan,
-      required this.isVegetarian,
-      required this.isLactoseFree});
+  const Meal({
+    required this.id,
+    required this.categories,
+    required this.title,
+    required this.imageUrl,
+    required this.ingredients,
+    required this.steps,
+    required this.duration,
+    required this.complexity,
+    required this.affordability,
+    required this.isGlutenFree,
+    required this.isVegan,
+    required this.isVegetarian,
+    required this.isLactoseFree,
+
+  });
 }
 
 extension StringExtension on String {

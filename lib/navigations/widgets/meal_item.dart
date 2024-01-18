@@ -1,3 +1,4 @@
+import 'package:dev_azuma/x_experiment/flutter_lifecycle.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -5,15 +6,23 @@ import '../models/meal_model.dart';
 import '../screen/meal_detail_screen.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({super.key, required this.meal});
+  const MealItem({super.key, required this.meal, required this.removeItem});
 
   final Meal meal;
+  final Function removeItem;
+
 
   void onSelectMeal(ctx) {
     Navigator.of(ctx).pushNamed(
       MealDetailScreen.routeName,
-      arguments: {meal },
-    );
+      arguments: {meal},
+    ).then((result) {
+      if (result != null) {
+        Meal? test = result as Meal;
+        xPrint(test.title);
+        removeItem(test);
+      }
+    });
   }
 
   @override
@@ -33,11 +42,14 @@ class MealItem extends StatelessWidget {
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(15),
                   ),
-                  child: Image.network(
-                    meal.imageUrl,
-                    height: 250,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                  child: Hero(
+                    tag: 'meal',
+                    child: Image.network(
+                      meal.imageUrl,
+                      height: 250,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 Positioned(

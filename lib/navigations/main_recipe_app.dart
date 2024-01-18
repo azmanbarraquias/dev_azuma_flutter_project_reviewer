@@ -1,3 +1,5 @@
+import 'package:dev_azuma/navigations/screen/filters_screen.dart';
+import 'package:dev_azuma/navigations/screen/tab_screen.dart';
 import 'package:dev_azuma/x_experiment/flutter_lifecycle.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +43,16 @@ class MyApp extends StatelessWidget {
               titleSmall:
                   const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
+        tabBarTheme: const TabBarTheme(
+            tabAlignment: TabAlignment.fill,
+            indicator: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.elliptical(100, 500),
+                topRight: Radius.elliptical(100, 500),
+              ),
+            ),
+            indicatorColor: Colors.black),
         appBarTheme: const AppBarTheme(
           iconTheme: IconThemeData(color: Colors.white),
           titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
@@ -50,9 +62,10 @@ class MyApp extends StatelessWidget {
       // default is /
       // home: const CategoriesScreen(),
       routes: {
-        '/': (ctx) => const CategoriesScreen(),
+        '/': (ctx) => const TabScreen(),
         CategoryMealsScreen.routeName: (ctx) => const CategoryMealsScreen(),
         MealDetailScreen.routeName: (ctx) => const MealDetailScreen(),
+        FiltersScreen.routeName: (ctx) => const FiltersScreen(),
       },
       onGenerateRoute: (setting) {
         xPrint(setting.arguments.toString());
