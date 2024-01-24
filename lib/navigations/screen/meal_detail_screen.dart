@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import '../models/meal_model.dart';
 
 class MealDetailScreen extends StatelessWidget {
-  const MealDetailScreen(
-      {super.key, required this.toggleFavorites, required this.isMealFavorite});
+  const MealDetailScreen({super.key});
 
   static const routeName = '/meal-details';
-  final Function toggleFavorites;
-  final Function isMealFavorite;
 
   _buildSectionTitle(String mealTitle, context) {
     return Container(
@@ -28,19 +25,11 @@ class MealDetailScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          toggleFavorites(meal.id);
+          Navigator.of(context).pop(meal);
         },
-        child: Icon(isMealFavorite(meal.id) ? Icons.star : Icons.star_border),
+        child: const Icon(Icons.delete),
       ),
       appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pop(meal);
-            },
-            icon: const Icon(Icons.delete),
-          )
-        ],
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(meal.id),
       ),
@@ -51,7 +40,7 @@ class MealDetailScreen extends StatelessWidget {
               height: 300,
               width: double.infinity,
               child: Hero(
-                tag: meal.id.toString(),
+                tag: 'meal',
                 child: Image.network(
                   meal.imageUrl,
                   fit: BoxFit.cover,

@@ -14,7 +14,7 @@ class MainDrawer extends StatelessWidget {
             color: Colors.purple.shade100,
             height: 120,
             width: double.infinity,
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(20),
             child: Text(
               'Cooking Up',
               style: TextStyle(
@@ -30,7 +30,7 @@ class MainDrawer extends StatelessWidget {
             Navigator.of(context).pushReplacementNamed('/');
           }),
           buildListTile('Filter', Icons.filter, () {
-            Navigator.of(context).pushNamed(FiltersScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName);
           }),
         ],
       ),
