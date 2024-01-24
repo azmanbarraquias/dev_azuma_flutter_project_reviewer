@@ -64,13 +64,4 @@ flutter {
     source '../..'
 }
 
-
-dependencies {
-    implementation project(':unityLibrary')
-}
-
-android {
-    defaultConfig {
-        minSdkVersion 22
-    }
-}
+dependencies {}
