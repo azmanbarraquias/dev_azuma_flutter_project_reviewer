@@ -11,7 +11,6 @@ class MealItem extends StatelessWidget {
   final Meal meal;
   final Function removeItem;
 
-
   void onSelectMeal(ctx) {
     Navigator.of(ctx).pushNamed(
       MealDetailScreen.routeName,
@@ -43,7 +42,7 @@ class MealItem extends StatelessWidget {
                     topRight: Radius.circular(15),
                   ),
                   child: Hero(
-                    tag: 'meal',
+                    tag: meal.id.toString(),
                     child: Image.network(
                       meal.imageUrl,
                       height: 250,
