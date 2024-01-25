@@ -101,7 +101,7 @@ class _HomeBodyState extends State<HomeBody> with WidgetsBindingObserver {
   }
 }
 
-void xPrint(String value) {
+void xPrint(dynamic value) {
   if (kDebugMode) {
     print('azman>$value');
   }

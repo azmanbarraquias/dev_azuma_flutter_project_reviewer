@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'contollers/tap_controller.dart';
+import '../contollers/tap_getx_controller.dart';
 
 class FirstPage extends StatelessWidget {
   const FirstPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TapController controller = Get.find();
+    TapGetXController controller = Get.find();
 
     return Scaffold(
       appBar: AppBar(
@@ -16,15 +16,15 @@ class FirstPage extends StatelessWidget {
           onPressed: () {
             Get.back();
           },
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: Container(
+      body: SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: Column(
           children: [
-            GetBuilder<TapController>(
+            GetBuilder<TapGetXController>(
               builder: (_) {
                 return Container(
                   margin: const EdgeInsets.all(20),
@@ -62,7 +62,7 @@ class FirstPage extends StatelessWidget {
                 ),
               )),
             ),
-            GetBuilder<TapController>(
+            GetBuilder<TapGetXController>(
               builder: (_) {
                 return GestureDetector(
                   onTap: () {

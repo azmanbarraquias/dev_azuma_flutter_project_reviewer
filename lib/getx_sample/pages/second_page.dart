@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'contollers/tap_controller.dart';
+import '../contollers/tap_getx_controller.dart';
 
 class SecondPage extends StatelessWidget {
   const SecondPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TapController controller = Get.find();
+    TapGetXController controller = Get.find();
 
     return Scaffold(
       appBar: AppBar(
@@ -24,7 +24,7 @@ class SecondPage extends StatelessWidget {
         height: double.infinity,
         child: Column(
           children: [
-            GetBuilder<TapController>(
+            GetBuilder<TapGetXController>(
               builder: (_) {
                 return Container(
                   margin: const EdgeInsets.all(20),
@@ -55,14 +55,14 @@ class SecondPage extends StatelessWidget {
               ),
               child: Center(
                   child: Text(
-                'Tap ${controller.x}',
+                    'Tap ${Get.find<TapGetXController>().countObs.value}',
                 style: const TextStyle(
                   fontSize: 20,
                   color: Colors.red,
                 ),
               )),
             ),
-            GetBuilder<TapController>(
+            GetBuilder<TapGetXController>(
               builder: (_) {
                 return GestureDetector(
                   onTap: () {
@@ -78,7 +78,7 @@ class SecondPage extends StatelessWidget {
                     ),
                     child: Center(
                         child: Text(
-                      'Tap ${Get.find<TapController>().count}',
+                      'Tap ${Get.find<TapGetXController>().countObs.value}',
                       style: const TextStyle(
                         fontSize: 20,
                         color: Colors.red,

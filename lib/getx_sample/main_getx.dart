@@ -1,8 +1,12 @@
+import 'package:dev_azuma/getx_sample/pages/init_dependency.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'my_home_page.dart';
+import 'init_controllers.dart';
+import 'pages/my_home_page.dart';
 
-void main() {
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await init();
   runApp(const MyApp());
 }
 
@@ -11,7 +15,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp( // getGetMaterialApp for GetX Navigation
+    return GetMaterialApp(
+      // getGetMaterialApp for GetX Navigation
+      initialBinding: InitDep(),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
