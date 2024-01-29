@@ -1,8 +1,9 @@
-import 'package:dev_azuma/getx_sample/pages/init_dependency.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'init_controllers.dart';
-import 'pages/my_home_page.dart';
+
+import '../../a_real_apps/main_real_apps.dart';
+import 'pages/init_dependency.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();

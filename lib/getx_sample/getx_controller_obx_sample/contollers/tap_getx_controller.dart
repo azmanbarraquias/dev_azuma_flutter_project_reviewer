@@ -1,13 +1,13 @@
-import 'package:dev_azuma/x_experiment/flutter_lifecycle.dart';
 import 'package:get/get.dart';
 
+import '../../../x_experiment/flutter_lifecycle.dart';
 import '../pages/second_page.dart';
 
 class TapGetXController extends GetxController {
   int _xSimple = 0;
 
   int get x => _xSimple;
-  
+
   RxInt countObs = 0.obs;
 
   void increaseX() {
@@ -36,5 +36,3 @@ class TapGetXController extends GetxController {
     Get.to(() => const SecondPage());
   }
 }
-
-
