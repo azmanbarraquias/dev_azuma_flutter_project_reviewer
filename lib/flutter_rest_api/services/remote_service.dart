@@ -1,6 +1,8 @@
+import 'package:dev_azuma/flutter_rest_api/models/pokemon.dart';
 import 'package:dev_azuma/flutter_rest_api/models/yugioh_card.dart';
 
 import '../../x_experiment/flutter_lifecycle.dart';
+import '../models/pokemon_list.dart';
 import '../models/post.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,6 +30,36 @@ class RemoteService {
       return yuGiOhFromJson(json);
     }
     xPrint(respond.statusCode);
+    return null;
+  }
+
+  Future<PokemonList?> getPokemonList() async {
+    var client = http.Client();
+
+    var uri =
+        Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
+    var respond = await client.get(uri);
+    if (respond.statusCode == 200) {
+      var json = respond.body;
+      xPrint(json);
+      return pokemonListFromJson(json);
+    }
+    xPrint(respond.statusCode);
+    return null;
+  }
+
+  Future<String?> getPokemon(String usl) async {
+    var client = http.Client();
+    var uri = Uri.parse(usl);
+    var respond = await client.get(uri);
+    if (respond.statusCode == 200) {
+      var json = respond.body;
+      xPrint(json);
+      if (pokemonFromJson(json).sprites?.frontDefault == null) {
+        return pokemonFromJson(json).sprites?.frontShiny;
+      }
+      return pokemonFromJson(json).sprites?.frontDefault;
+    }
     return null;
   }
 }

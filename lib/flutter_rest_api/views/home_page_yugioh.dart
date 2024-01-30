@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dev_azuma/flutter_rest_api/models/yugioh_card.dart';
 import 'package:flutter/material.dart';
 
@@ -28,10 +29,10 @@ class _HomePageYugiOhState extends State<HomePageYugiOh> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: const Text('YuGiOH'),
+        title: Text('YuGiOH, Card Count: ${yuGiOhData?.data?.length ?? 0}'),
       ),
       body: Visibility(
-        visible: true,
+        visible: isLoaded,
         replacement: const Center(
           child: CircularProgressIndicator(),
         ),
@@ -42,7 +43,14 @@ class _HomePageYugiOhState extends State<HomePageYugiOh> {
               return Card(
                 margin: const EdgeInsets.all(10),
                 child: ListTile(
-                leading: Image.network(yuGiOhDataC?.cardImages?.first.imageUrl ?? ''),
+                  onTap: () {},
+                  leading: CachedNetworkImage(
+                    imageUrl: yuGiOhDataC?.cardImages?.first.imageUrl ?? '',
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
                   title: Text(
                     '${index + 1} ${yuGiOhDataC?.name}' ?? '',
                     maxLines: 1,
@@ -62,7 +70,7 @@ class _HomePageYugiOhState extends State<HomePageYugiOh> {
     yuGiOhData = await RemoteService().getYuGiOh();
     if (yuGiOhData != null) {
       setState(() {
-        // isLoaded = true;
+        isLoaded = true;
       });
     }
   }
