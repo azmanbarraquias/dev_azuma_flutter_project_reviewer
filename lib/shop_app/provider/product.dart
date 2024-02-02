@@ -1,4 +1,8 @@
-class Product {
+import 'package:flutter/material.dart';
+
+import '../../x_experiment/flutter_lifecycle.dart';
+
+class Product with ChangeNotifier {
   final String id;
   final String title;
   final String description;
@@ -13,4 +17,10 @@ class Product {
       required this.price,
       required this.imageUrl,
       this.isFavorite = false});
+
+  void toggleFavoriteStatus() {
+    isFavorite = !isFavorite;
+    xPrint('$title is favorite set to $isFavorite.');
+    notifyListeners();
+  }
 }

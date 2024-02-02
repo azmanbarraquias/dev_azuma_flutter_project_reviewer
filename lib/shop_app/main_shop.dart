@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:dev_azuma/shop_app/provider/products_provider.dart';
+import 'package:dev_azuma/shop_app/provider/products.dart';
 import 'package:dev_azuma/shop_app/screens/products_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (ctx) {
-        return ProductProvider();
+        return Products();
       },
       child: MaterialApp(
         title: 'MyShop',
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
                     fontSize:
                         Theme.of(context).textTheme.headlineMedium?.fontSize)),
             primarySwatch: Colors.blue),
-        home: ProductsOverviewScreen(),
+        home: const ProductsOverviewScreen(),
         routes: {
           ProductDetailsScreen.routeName: (ctx) => const ProductDetailsScreen(),
         },
