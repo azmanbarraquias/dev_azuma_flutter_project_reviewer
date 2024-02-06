@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
 import '../utils/printx.dart';
+import '../x_experiment/flutter_lifecycle.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
-      home: MyPage()
-    ),
+    const MaterialApp(home: MyPage()),
   );
 }
 
@@ -19,14 +18,19 @@ class MyPage extends StatelessWidget {
     return Center(
       child: TextButton(
         onPressed: () {
-          mainTest();
+          // mainTest();
+          Future<String>.delayed(const Duration(seconds: 3,), () {
+            return 'Done';
+          }).whenComplete(() => xPrint('XDone'));
+
+          xPrint("value");
+
         },
         child: const Text("Run Code"),
       ),
     );
   }
 }
-
 
 void mainTest() {
   // var p1 = Person(name: "Azman");
@@ -42,7 +46,7 @@ void mainTest() {
 
   const t1 = Tuple2<String, int>('a', 10);
   final t2 = t1.withItem1('a');
-  PrintX(t2.item2 as String? ); // p
+  PrintX(t2.item2 as String?); // p
 }
 
 double addNumber(a, b) => a + b;
@@ -57,7 +61,8 @@ class Person {
 class Test {
   void add1(a, b) {
     // a & b are positional parameters
-    PrintX(a + b); // print() is a built-in function that will be explained later
+    PrintX(
+        a + b); // print() is a built-in function that will be explained later
   }
 
   void add2(var a, {required int b, int c = 5}) {

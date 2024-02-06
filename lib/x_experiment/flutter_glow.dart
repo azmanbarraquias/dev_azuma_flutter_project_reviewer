@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             GlowButton(
-              spreadRadius: 2,
+              spreadRadius: 5,
               onPressed: () {},
               color: flutterColor,
               child: const Text('Glow'),
