@@ -12,7 +12,6 @@ class ProductGrid extends StatefulWidget {
 
   final bool showFavs;
 
-
   @override
   State<ProductGrid> createState() => _ProductGridState();
 }
@@ -21,8 +20,8 @@ class _ProductGridState extends State<ProductGrid> {
 
   @override
   Widget build(BuildContext context) {
-    final productsProv = Provider.of<Products>(context);
-    final products = widget.showFavs ? productsProv.favoritesItem : productsProv.products;
+    final Products productsProv = Provider.of<Products>(context);
+    final List<Product> products = widget.showFavs ? productsProv.favoritesItem : productsProv.products;
 
     return GridView.builder(
       itemCount: products.length,

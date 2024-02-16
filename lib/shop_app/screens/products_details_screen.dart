@@ -14,12 +14,13 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = ModalRoute.of(context)?.settings.arguments as Product;
 
-    final productProvider = Provider.of<Products>(context, listen: false).findById(product);
+    final productProvider =  Provider.of<Products>(context, listen: false).findById(product);
     return Scaffold(
       appBar: AppBar(
         title: Text(productProvider.title),
       ),
       body: CachedNetworkImage(
+        placeholder: (ctx, str) => const CircularProgressIndicator(),
         imageUrl: productProvider.imageUrl,
       ),
     );

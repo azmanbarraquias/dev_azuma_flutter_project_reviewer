@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             appBarTheme: AppBarTheme(
+                iconTheme: const IconThemeData(color: Colors.white),
                 backgroundColor: Colors.blue,
                 titleTextStyle: TextStyle(
                     color: Colors.white,

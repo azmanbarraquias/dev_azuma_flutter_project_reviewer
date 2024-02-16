@@ -13,16 +13,13 @@ class ProductsOverviewScreen extends StatefulWidget {
 
   static String routeName = '/product-overview-screen';
 
-
   @override
   State<ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
 }
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Shop'),
@@ -31,13 +28,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             onSelected: (FilterOptions filOp) {
               switch (filOp) {
                 case FilterOptions.all:
-                  {
-
-                  }
+                  {}
                 case FilterOptions.favorite:
-                  {
-
-                  }
+                  {}
                 case FilterOptions.sale:
                   {}
                 default:
@@ -58,7 +51,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: RefreshIndicator(
           onRefresh: onRefresh,
-          child: const ProductGrid(showFavs: false,),
+          child: const ProductGrid(
+            showFavs: false,
+          ),
         ),
       ),
     );

@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Yakitati Recipe\'s',
+      title: 'Yakitori Recipe\'s',
       theme: ThemeData(
         primarySwatch: Colors.pink,
         hintColor: Colors.amber,

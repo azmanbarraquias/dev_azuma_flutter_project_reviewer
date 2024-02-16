@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'main_drawer.dart';
 
 class FiltersScreen extends StatefulWidget {
-  const FiltersScreen({super.key, required this.saveFilter, required this.currentFilter});
+  const FiltersScreen(
+      {super.key, required this.saveFilter, required this.currentFilter});
 
   static const routeName = '/filter-screen';
 
@@ -19,7 +20,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
   bool _vegetarian = false;
   bool _vegan = false;
   bool _lactoseFree = false;
-
 
   @override
   void initState() {

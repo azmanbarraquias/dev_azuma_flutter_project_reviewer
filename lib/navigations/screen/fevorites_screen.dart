@@ -10,10 +10,11 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(favoriteMeals.isEmpty) {
-      return const Center(child: Text('You have no favorites yet. . .'),);
-    }
-    else {
+    if (favoriteMeals.isEmpty) {
+      return const Center(
+        child: Text('You have no favorites yet. . .'),
+      );
+    } else {
       return ListView.builder(
         itemCount: favoriteMeals.length,
         itemBuilder: (ctx, index) {
@@ -21,13 +22,12 @@ class FavoritesScreen extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: MealItem(
-              meal: currentMeal, removeItem: (){},
+              meal: currentMeal,
+              removeItem: () {},
             ),
           );
         },
       );
     }
   }
-
-
 }

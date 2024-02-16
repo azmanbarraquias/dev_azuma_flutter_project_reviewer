@@ -16,7 +16,7 @@ class ProductItem extends StatelessWidget {
     // xPrint('rerun product');
 
     return Card(
-      elevation: 5,
+      elevation: 3,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
