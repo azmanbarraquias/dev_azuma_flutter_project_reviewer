@@ -17,11 +17,10 @@ class ProductGrid extends StatefulWidget {
 }
 
 class _ProductGridState extends State<ProductGrid> {
-
   @override
   Widget build(BuildContext context) {
     final Products productsProv = Provider.of<Products>(context);
-    final List<Product> products = widget.showFavs ? productsProv.favoritesItem : productsProv.products;
+    final List<Product> products = widget.showFavs ? productsProv.favoritesItems : productsProv.products;
 
     return GridView.builder(
       itemCount: products.length,
@@ -31,11 +30,10 @@ class _ProductGridState extends State<ProductGrid> {
           crossAxisSpacing: 10,
           mainAxisSpacing: 10),
       itemBuilder: (ctx, i) {
-        return ChangeNotifierProvider<Product>(
-            create: (BuildContext context) {
-              return products[i];
-            },
-            child: const ProductItem());
+        return ChangeNotifierProvider.value(
+          value: products[i],
+          child: const ProductItem(),
+        );
       },
     );
   }

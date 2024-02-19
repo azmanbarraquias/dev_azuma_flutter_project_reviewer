@@ -52,7 +52,12 @@ class Products with ChangeNotifier {
     return products.firstWhere((productProv) => productProv.id == product.id);
   }
 
-  List<Product> get favoritesItem {
+  // dart don't have overloading
+  // Product findById(String product) {
+  //   return products.firstWhere((productProv) => productProv.id == product);
+  // }
+
+  List<Product> get favoritesItems {
     return _products.where((product) => product.isFavorite).toList();
   }
 }

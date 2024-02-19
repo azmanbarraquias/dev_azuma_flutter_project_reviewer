@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:dev_azuma/shop_app/provider/cart.dart';
 import 'package:dev_azuma/shop_app/provider/products.dart';
+import 'package:dev_azuma/shop_app/screens/cart_screen.dart';
 import 'package:dev_azuma/shop_app/screens/products_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,10 +18,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) {
-        return Products();
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) {
+            return Products();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) {
+            return Cart();
+          },
+        ),
+      ],
       child: MaterialApp(
         title: 'MyShop',
         debugShowCheckedModeBanner: false,
@@ -35,6 +46,7 @@ class MyApp extends StatelessWidget {
         home: const ProductsOverviewScreen(),
         routes: {
           ProductDetailsScreen.routeName: (ctx) => const ProductDetailsScreen(),
+          CartScreen.routeName: (ctx) => const CartScreen(),
         },
       ),
     );

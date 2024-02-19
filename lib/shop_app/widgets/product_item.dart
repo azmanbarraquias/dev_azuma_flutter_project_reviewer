@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../x_experiment/flutter_lifecycle.dart';
+import '../provider/cart.dart';
 import '../provider/product.dart';
 
 class ProductItem extends StatelessWidget {
@@ -12,9 +13,9 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final product = Provider.of<Product>(context, listen: true); // rerun build
-    // xPrint('rerun product');
-
+    final product = Provider.of<Product>(context, listen: false); // rerun build
+    final cart = Provider.of<Cart>(context, listen: false); // rerun build
+    xPrint('build${product.title}');
     return Card(
       elevation: 3,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -22,41 +23,42 @@ class ProductItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       // only rerun subpart of widget
-      child: Consumer<Product>(
-        builder: (_, product, __) {
-          return GridTile(
-            footer: GridTileBar(
-              leading: IconButton(
-                icon: Icon(product.isFavorite
-                    ? Icons.favorite
-                    : Icons.favorite_border_outlined),
-                onPressed: () {
-                  product.toggleFavoriteStatus();
-                },
-              ),
-              trailing: IconButton(
-                icon: const Icon(
-                    false ? Icons.shopping_cart : Icons.shopping_cart_outlined),
-                onPressed: () {},
-              ),
-              backgroundColor: Colors.black45,
-              title: Text(product.title),
-            ),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(
-                  ProductDetailsScreen.routeName,
-                  arguments: product,
-                );
+      child: GridTile(
+        footer: GridTileBar(
+          leading: Consumer<Product>(builder: (_, product, __) {
+            xPrint('fev build${product.title}');
+            return IconButton(
+              icon: Icon(product.isFavorite
+                  ? Icons.favorite
+                  : Icons.favorite_border_outlined),
+              onPressed: () {
+                product.toggleFavoriteStatus();
               },
-              child: CachedNetworkImage(
-                placeholder: (ctx, str) => const CircularProgressIndicator(),
-                imageUrl: product.imageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
-          );
-        },
+            );
+          }),
+          trailing: IconButton(
+            icon: const Icon(
+                false ? Icons.shopping_cart : Icons.shopping_cart_outlined),
+            onPressed: () {
+              cart.addToCart(product);
+            },
+          ),
+          backgroundColor: Colors.black45,
+          title: Text(product.title),
+        ),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              ProductDetailsScreen.routeName,
+              arguments: product,
+            );
+          },
+          child: CachedNetworkImage(
+            placeholder: (ctx, str) => const CircularProgressIndicator(),
+            imageUrl: product.imageUrl,
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }
