@@ -1,7 +1,10 @@
+import 'package:dev_azuma/shop_app/screens/orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/cart.dart';
+import '../widgets/cart_item.dart';
+import '../provider/orders.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -29,18 +32,38 @@ class CartScreen extends StatelessWidget {
                     'Total',
                     style: TextStyle(fontSize: 20),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Chip(
                     label: Text(
-                      '\$${cart.totalAmount}',
+                      '\$${cart.totalAmount.toStringAsFixed(2)}',
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
-                    child: const Text('Order now'),
+                    onPressed: () {
+                      Provider.of<Orders>(context, listen: false).addOrder(
+                          cart.items.values.toList(), cart.totalAmount);
+                      cart.clear();
+                    },
+                    child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(OrdersScreen.routeName);
+                        },
+                        child: const Text('Order now')),
                   )
                 ],
               ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: cart.items.length,
+              itemBuilder: (ctx, i) {
+                return CartItem(cart: cart.items.values.elementAt(i));
+              },
             ),
           )
         ],

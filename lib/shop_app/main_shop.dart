@@ -1,12 +1,12 @@
-import 'dart:ui';
-
-import 'package:dev_azuma/shop_app/provider/cart.dart';
-import 'package:dev_azuma/shop_app/provider/products.dart';
-import 'package:dev_azuma/shop_app/screens/cart_screen.dart';
-import 'package:dev_azuma/shop_app/screens/products_details_screen.dart';
+import 'package:dev_azuma/shop_app/screens/orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'provider/cart.dart';
+import 'provider/orders.dart';
+import 'provider/products.dart';
+import 'screens/cart_screen.dart';
+import 'screens/products_details_screen.dart';
 import 'screens/products_overview_screen.dart';
 
 void main() {
@@ -20,16 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (ctx) {
-            return Products();
-          },
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) {
-            return Cart();
-          },
-        ),
+        ChangeNotifierProvider(create: (ctx) => Products()),
+        ChangeNotifierProvider(create: (ctx) => Cart()),
+        ChangeNotifierProvider(create: (ctx) => Orders()),
       ],
       child: MaterialApp(
         title: 'MyShop',
@@ -47,6 +40,7 @@ class MyApp extends StatelessWidget {
         routes: {
           ProductDetailsScreen.routeName: (ctx) => const ProductDetailsScreen(),
           CartScreen.routeName: (ctx) => const CartScreen(),
+          OrdersScreen.routeName: (ctx) => const OrdersScreen(),
         },
       ),
     );

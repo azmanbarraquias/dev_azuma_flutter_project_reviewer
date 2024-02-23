@@ -1,18 +1,13 @@
 import 'package:dev_azuma/shop_app/provider/product.dart';
+import 'package:dev_azuma/x_experiment/flutter_lifecycle.dart';
 import 'package:flutter/foundation.dart';
 
-class CartItem {
-  final String id;
-  final Product product;
-  final int quantity;
-
-  CartItem({required this.id, required this.product, required this.quantity});
-}
+import '../models/cart_product.dart';
 
 class Cart with ChangeNotifier {
-  final Map<String, CartItem> _items = {};
+  final Map<String, CartProduct> _items = {};
 
-  Map<String, CartItem> get items {
+  Map<String, CartProduct> get items {
     return {..._items};
   }
 
@@ -20,21 +15,32 @@ class Cart with ChangeNotifier {
     if (_items.containsKey(product.id)) {
       _items.update(
           product.id,
-          (value) => CartItem(
+          (value) => CartProduct(
               id: value.id,
               product: value.product,
               quantity: value.quantity + 1));
     } else {
       _items.putIfAbsent(
           product.id,
-          () => CartItem(
+          () => CartProduct(
               id: DateTime.now().toString(), product: product, quantity: 1));
     }
     notifyListeners();
   }
 
+  void removeItem(CartProduct cartProduct) {
+    xPrint('card product removed: ${cartProduct.product.title}');
+    _items.remove(cartProduct.product.id);
+    notifyListeners();
+  }
+
   int get itemCount {
     return _items.length;
+  }
+
+  void clear() {
+    _items.clear();
+    notifyListeners();
   }
 
   double get totalAmount {
