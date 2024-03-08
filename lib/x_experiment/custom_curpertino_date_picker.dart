@@ -48,13 +48,14 @@ class _CustomCupertinoPickerAppState extends State<CustomCupertinoPickerApp> {
         body: Center(
           child: Container(
             decoration: const BoxDecoration(
+              color: Color.fromRGBO(243, 243, 243, 1),
               border: Border.symmetric(
                 horizontal: BorderSide(color: Colors.red, width: 1),
               ),
             ),
-            height: 300,
+            height: 151,
             child: CustomCupertinoDatePicker(
-              itemExtent: 50,
+              itemExtent: 45,
               minDate: _minDate,
               maxDate: _maxDate,
               selectedDate: _selectedDate,
@@ -62,22 +63,20 @@ class _CustomCupertinoPickerAppState extends State<CustomCupertinoPickerApp> {
                 width: double.infinity,
                 height: 50,
                 decoration: const BoxDecoration(
-                color: Color.fromRGBO(18, 18, 18, 0.03),
-
+                  color: Color.fromRGBO(18, 18, 18, 0.03),
                 ),
               ),
               selectedStyle: const TextStyle(
                 color: Colors.black,
-                fontWeight: FontWeight.w600,
-                fontSize: 24,
+                fontSize: 16,
               ),
-              unselectedStyle: TextStyle(
-                color: Colors.grey[800],
-                fontSize: 18,
+              unselectedStyle: const TextStyle(
+                color: Color.fromRGBO(18, 18, 18, 0.48),
+                fontSize: 14,
               ),
-              disabledStyle: TextStyle(
-                color: Colors.grey[400],
-                fontSize: 18,
+              disabledStyle: const TextStyle(
+                color: Color.fromRGBO(18, 18, 18, 0.48),
+                fontSize: 14,
               ),
               onSelectedItemChanged: (date) => _selectedDate = date,
             ),
@@ -129,8 +128,8 @@ class CustomCupertinoDatePicker extends StatefulWidget {
     this.disabledStyle,
     this.backgroundColor,
     this.squeeze = 1.45,
-    this.diameterRatio = 1.1,
-    this.magnification = 1.0,
+    this.diameterRatio = 1.5,
+    this.magnification = 1,
     this.offAxisFraction = 0.0,
     this.useMagnifier = false,
     this.selectionOverlay = const CupertinoPickerDefaultSelectionOverlay(),
@@ -215,8 +214,8 @@ class _CustomCupertinoDatePickerState extends State<CustomCupertinoDatePicker> {
   void _scrollList(FixedExtentScrollController controller, int index) {
     controller.animateToItem(
       index,
-      curve: Curves.easeIn,
-      duration: const Duration(milliseconds: 300),
+      curve: Curves.bounceIn,
+      duration: const Duration(milliseconds: 1000),
     );
   }
 
@@ -388,7 +387,7 @@ class _CustomCupertinoDatePickerState extends State<CustomCupertinoDatePicker> {
 
   Widget _daySelector() {
     return _selector(
-      values: List.generate(_numberOfDays(), (index) => index + 1),
+      values: List.generate(_numberOfDays(), (index) => '${index + 1}日'),
       selectedValueIndex: _selectedDayIndex,
       scrollController: _dayScrollController,
       isDisabled: (index) => _isDisabled(index, _SelectorType.day),
@@ -416,7 +415,7 @@ class _CustomCupertinoDatePickerState extends State<CustomCupertinoDatePicker> {
     return _selector(
       values: List.generate(
         _maxDate.year - _minDate.year + 1,
-        (index) => _minDate.year + index,
+        (index) => '${_minDate.year + index}年',
       ),
       selectedValueIndex: _selectedYearIndex,
       scrollController: _yearScrollController,

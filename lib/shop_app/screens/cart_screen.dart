@@ -40,14 +40,12 @@ class CartScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      Provider.of<Orders>(context, listen: false).addOrder(
-                          cart.items.values.toList(), cart.totalAmount);
+                      Provider.of<Orders>(context, listen: false).addOrder(cart.items.values.toList(), cart.totalAmount);
                       cart.clear();
                     },
                     child: TextButton(
                         onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(OrdersScreen.routeName);
+                          Navigator.of(context).pushNamed(OrdersScreen.routeName);
                         },
                         child: const Text('Order now')),
                   )
